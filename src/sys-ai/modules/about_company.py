@@ -1,10 +1,12 @@
 import streamlit as st
 import PyPDF2
-import openai
+import boto3
+import json
 import os
 import re
 
-
+# Create Bedrock runtime client
+bedrock = boto3.client(service_name="bedrock-runtime", region_name="us-east-1")
 
 def read_pdf(file_path):
     """Extract text from PDF file."""
@@ -15,58 +17,54 @@ def read_pdf(file_path):
 
 def highlight_entities(text):
     """Highlight names, locations, and mask sensitive info."""
-    # Example patterns (adjust based on company data)
-    name_pattern = r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)*)\b"  # Detect names like "John Doe"
-    location_pattern = r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)\b"  # Detect locations
-    gst_pattern = r"\b\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1}\b"  # GST Number
-    account_pattern = r"\b\d{9,18}\b"  # Bank account numbers (9-18 digits)
+    name_pattern = r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)*)\b"
+    location_pattern = r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)\b"
+    gst_pattern = r"\b\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[Z]{1}[A-Z\d]{1}\b"
+    account_pattern = r"\b\d{9,18}\b"
 
-    # Highlight Names & Locations
     text = re.sub(name_pattern, r'**🟢 \1**', text)
     text = re.sub(location_pattern, r'**📍 \1**', text)
-
-    # Mask Sensitive Information
     text = re.sub(gst_pattern, "[🔒 GST Number Hidden]", text)
     text = re.sub(account_pattern, "[🔒 Account Number Hidden]", text)
 
     return text
 
+def bedrock_claude_response(prompt):
+    """Utility function to get Claude 3 Sonnet response."""
+    try:
+        model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
+        body = json.dumps({
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 300,
+            "messages": [{"role": "user", "content": prompt}]
+        })
+        response = bedrock.invoke_model(modelId=model_id, body=body)
+        result = json.loads(response['body'].read())
+        return result["content"][0]["text"]
+    except Exception as e:
+        return f"Error communicating with AWS Bedrock: {e}"
+
 def summarize_company_info(text):
-    """Use AI to generate a summary of the company information."""
     text = highlight_entities(text)
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "Summarize the following company details."},
-            {"role": "user", "content": text}
-        ]
-    )
-    return response["choices"][0]["message"]["content"]
+    prompt = f"Summarize the following company details clearly and concisely:\n\n{text}"
+    return bedrock_claude_response(prompt)
 
 def answer_company_question(text, question):
-    """Use AI to answer specific questions about the company."""
     text = highlight_entities(text)
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "Answer the question based on the given company details."},
-            {"role": "user", "content": f"Company Info: {text}\nQuestion: {question}"}
-        ]
-    )
-    return response["choices"][0]["message"]["content"]
+    prompt = f"Company Information:\n{text}\n\nQuestion: {question}\nAnswer based only on the provided company details."
+    return bedrock_claude_response(prompt)
 
 def about_company_ui():
-    """Streamlit UI for displaying company details."""
     st.title("🏢 About Company")
-    file_path = "modules/TechNova Solutions.pdf"  # Ensure this file exists in modules folder
-    
+    file_path = "modules/TechNova Solutions.pdf"
+
     if os.path.exists(file_path):
         if st.button("📄 Start - Learn About the Company", use_container_width=True):
             text = read_pdf(file_path)
             summary = summarize_company_info(text)
             st.write("### 🏢 Company Summary:")
             st.info(summary)
-        
+
         question = st.text_input("🔍 Ask a question about the company:")
         if st.button("Ask", use_container_width=True):
             if question.strip():
