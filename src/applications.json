@@ -1,0 +1,20 @@
+[
+    {
+        "name": "7z2409-x64.exe",
+        "path": "downloads\\7z2409-x64.exe",
+        "status": "installed",
+        "approved": true
+    },
+    {
+        "name": "npp.8.7.7.Installer.x64 (1).exe",
+        "path": "downloads\\npp.8.7.7.Installer.x64 (1).exe",
+        "status": "pending",
+        "approved": true
+    },
+    {
+        "name": "WinRAR-701.exe",
+        "path": "downloads\\WinRAR-701.exe",
+        "status": "pending",
+        "approved": false
+    }
+]

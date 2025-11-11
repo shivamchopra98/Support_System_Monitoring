@@ -1,0 +1,10 @@
+streamlit
+openai
+pandas
+psutil
+streamlit-aggrid
+tiktoken
+pypdf2
+scikit-learn
+matplotlib
+numpy

@@ -1,0 +1,130 @@
+[
+    {
+        "ticket_id": "INC0000001",
+        "username": "Ram",
+        "issue": "xampp not working\n",
+        "category": "Category: Software Issue, Server Issue",
+        "status": "pending",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000002",
+        "username": "Ram",
+        "issue": "Api not workimg\n",
+        "category": "1. Software Issue\n2. Connectivity Issue\n3. Integration Issue",
+        "status": "pending",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000003",
+        "username": "Ram",
+        "issue": "campp not  working",
+        "category": "This issue can be classified under the following categories:\n1. Software Issue: The specific software \"Campp\" is not working as expected.\n2. Application Issue: The problem is related to the functionality or performance of the application \"Campp.\"\n3. Technical Issue: There may be technical issues affecting the functioning of \"Campp.\"\n4. User Support: Assistance may be needed to resolve the issue with \"Campp.\"",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000004",
+        "username": "Ram",
+        "issue": "xampp not working",
+        "category": "Issue Category: Software Issue, Web Development, Server Configuration",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000005",
+        "username": "Ram",
+        "issue": "network slow\n",
+        "category": "Category: Network Issue",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000006",
+        "username": "Ram",
+        "issue": "laptop not booting",
+        "category": "1. Hardware issue\n2. Booting problem\n3. Operating system issue",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000007",
+        "username": "Ram",
+        "issue": "Mouse not working",
+        "category": "Hardware, Input Device",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000008",
+        "username": "Ram",
+        "issue": "teams unable to install\n",
+        "category": "Category: Software Installation/Troubleshooting",
+        "status": "resolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000009",
+        "username": "Ram",
+        "issue": "vpn issue\n",
+        "category": "Category: Networking, Connectivity",
+        "status": "pending",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000010",
+        "username": "Ram",
+        "issue": "laptop not booting",
+        "category": "Hardware issue, Booting issue, Operating system issue.",
+        "status": "pending",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000011",
+        "username": "Ram",
+        "issue": "laptop not booting",
+        "category": "Category: Hardware, Troubleshooting, Operating System",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000012",
+        "username": "Ram",
+        "issue": "Laptop ms office not working",
+        "category": "Software Issue, Productivity Software Issue",
+        "status": "resolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000013",
+        "username": "Ram",
+        "issue": "my laptop not booing and gettign beep sound",
+        "category": "Hardware, Booting Issue",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000014",
+        "username": "Ram",
+        "issue": "ms office opening ",
+        "category": "Software \nApplication",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000015",
+        "username": "Ram",
+        "issue": "laptop not working",
+        "category": "Hardware, Operating System, Software, Connectivity",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000016",
+        "username": "Ram",
+        "issue": "vijay not working",
+        "category": "Based on the information provided, the IT issue can be classified as a hardware issue.",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    }
+]

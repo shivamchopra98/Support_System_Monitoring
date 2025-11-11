@@ -1,0 +1,10 @@
+[
+    {
+        "ticket_id": "INC0000001",
+        "username": "Ram",
+        "issue": "laptop not booting up",
+        "category": "General Support",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    }
+]
