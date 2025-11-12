@@ -78,5 +78,13 @@
         "category": "Based on the information provided, this issue can be classified as a Hardware Issue.\n\nSpecifically, it appears to be related to a problem with the keyboard's backlight feature, which is a hardware component of the keyboard itself. The backlight not",
         "status": "unresolved",
         "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000011",
+        "username": "Shivamchopra",
+        "issue": "Network connectivity issue.",
+        "category": "Network Issue",
+        "status": "unresolved",
+        "assigned_to": "L1"
     }
 ]

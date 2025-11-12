@@ -67,16 +67,19 @@ def summarize_issue(user_text):
 # ---------------------------------------------------------------------
 def classify_ticket(issue_text):
     """
-    Categorizes issue into standard IT categories.
+    Dynamically classifies the user's issue into one IT category.
+    The model is instructed to return ONLY the exact category name.
     """
     try:
         model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
         body = json.dumps({
             "anthropic_version": "bedrock-2023-05-31",
-            "max_tokens": 50,
+            "max_tokens": 30,
             "system": (
-                "Classify the issue into one of these categories: "
-                "Network Issue, Hardware Issue, Software Issue, Authentication Issue, Performance Issue, or General Support."
+                "You are an IT service desk assistant. "
+                "Classify the following issue into ONE of these exact categories: "
+                "Network Issue, Hardware Issue, Software Issue, Authentication Issue, Performance Issue, or General Support. "
+                "Return ONLY the category name — no explanations, no sentences."
             ),
             "messages": [
                 {
@@ -85,13 +88,36 @@ def classify_ticket(issue_text):
                 }
             ]
         })
+
         response = bedrock.invoke_model(modelId=model_id, body=body)
         result = json.loads(response["body"].read())
-        return result["content"][0]["text"].strip()
+
+        # Extract model output safely
+        raw_output = result.get("content", [{}])[0].get("text", "").strip()
+
+        # Normalize the output (in case Claude adds extra words)
+        valid_categories = [
+            "Network Issue",
+            "Hardware Issue",
+            "Software Issue",
+            "Authentication Issue",
+            "Performance Issue",
+            "General Support"
+        ]
+        for cat in valid_categories:
+            if cat.lower() in raw_output.lower():
+                return cat
+
+        # 🟡 Fallback to Claude’s raw text (sometimes it's perfect)
+        if len(raw_output.split()) <= 4:
+            return raw_output
+
+        # Default fallback
+        return "General Support"
+
     except Exception as e:
         print(f"⚠️ Error classifying issue: {e}")
         return "General Support"
-
 
 # ---------------------------------------------------------------------
 # 💾 Save Ticket to JSON
