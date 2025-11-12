@@ -39,7 +39,7 @@ def update_ticket_status(ticket_id, new_status):
 
 # Customizing Streamlit page
 st.set_page_config(page_title="SYS AI - L1 Support", layout="wide")
-logo_path = "src\sys-ai\images\inf_logo.png"
+logo_path = os.path.join("src", "sys-ai", "images", "inf_logo.png")
 if os.path.exists(logo_path):
     st.sidebar.image(logo_path)
 else:
@@ -52,7 +52,7 @@ page = st.sidebar.radio(
         "Home",
         "Chatbot",
         "Ticket Classifier",
-        "Log Monitoring",
+        # "Log Monitoring",
         "Troubleshoot",
         "About Company",
         "Application Installer",
