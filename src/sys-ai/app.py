@@ -48,7 +48,17 @@ else:
 st.sidebar.title("🔍 Navigation")
 page = st.sidebar.radio(
     "Go to",
-    ["Home",  "Chatbot", "Ticket Classifier", "Log Monitoring", "Troubleshoot", "About Company", "Application Installer",  "Admin Portal", ]
+    [
+        "Home",
+        "Chatbot",
+        "Ticket Classifier",
+        "Log Monitoring",
+        "Troubleshoot",
+        "About Company",
+        "Application Installer",
+        "Admin Portal",
+        "Proactive Health Agent"
+    ]
 )
 
 def set_custom_css():
@@ -641,5 +651,61 @@ elif page == "About Company":
 elif page == "Application Installer":
     application_installer_ui()
     
-# elif page == "Proactive System Health Predictions":
+# 🩺 Proactive Health Agent
+elif page == "Proactive Health Agent":
+    import streamlit as st
+    try:
+        from modules.system_health_agent import run_health_scan
+        from modules.system_event_monitor import run_event_log_scan
+    except Exception as e:
+        st.error(f"⚠️ Import error: {e}")
+        st.stop()
+
+    st.title("Proactive System Health Agent")
+    st.markdown("""
+        This AI-powered agent monitors:
+        - CPU / RAM / Disk performance  
+        - Windows Event Viewer logs (critical / error / warning)  
+
+        It automatically raises support tickets if major issues are detected.
+    """)
+
+    st.markdown("---")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("📊 System Performance")
+        if st.button("🚀 Run System Scan", use_container_width=True):
+            with st.spinner("Running system scan..."):
+                try:
+                    metrics, suggestion, ticket = run_health_scan()
+                    st.json(metrics)
+                    st.info(suggestion)
+                    if ticket:
+                        st.success(
+                            f"🎫 Ticket Raised: **{ticket['ticket_id']}** — Category: **{ticket['category']}**"
+                        )
+                    else:
+                        st.success("✅ System performance is stable.")
+                except Exception as e:
+                    st.error(f"⚠️ Scan error: {e}")
+
+    with col2:
+        st.subheader("🧾 Windows Event Logs")
+        if st.button("📋 Check Event Viewer Logs", use_container_width=True):
+            with st.spinner("Analyzing Event Viewer logs..."):
+                try:
+                    logs, summary, ticket = run_event_log_scan()
+                    if logs:
+                        st.json(logs[:5])
+                    st.info(summary)
+                    if ticket:
+                        st.success(
+                            f"🎫 Ticket Raised: **{ticket['ticket_id']}** — Category: **{ticket['category']}**"
+                        )
+                    else:
+                        st.success("✅ No critical events found in last 24 hours.")
+                except Exception as e:
+                    st.error(f"⚠️ Log analysis error: {e}")
    
