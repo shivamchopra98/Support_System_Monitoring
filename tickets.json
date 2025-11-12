@@ -6,5 +6,77 @@
         "category": "General Support",
         "status": "unresolved",
         "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000002",
+        "username": "Ram",
+        "issue": "can you raise a ticket for me?",
+        "category": "This IT support issue falls under the \"General\" category. The request to raise a ticket is a general IT support task, not specifically related to any particular system or component.",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000003",
+        "username": "Ram",
+        "issue": "I am getting network connectivity issue",
+        "category": "Based on the description \"I am getting network connectivity issue\", this IT support issue can be classified under the Network category.\n\nNetwork issues typically involve problems related to the computer's ability to connect to the internet or other networks, such as Wi-Fi connectivity problems, router or modem issues, network cable problems, or issues with network settings or configurations.",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000004",
+        "username": "ShivamChopra",
+        "issue": "I am getting network connectivity issue",
+        "category": "Network Issue",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000005",
+        "username": "ShivamChopra",
+        "issue": "I am getting network connectivity issue",
+        "category": "Network Issue",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000006",
+        "username": "ShivamChopra",
+        "issue": "I am getting network connectivity issue",
+        "category": "Network Issue",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000007",
+        "username": "ShivamChopra",
+        "issue": "Hi can you help me with network connectivity issue?",
+        "category": "Network Issue",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000008",
+        "username": "ShivamChopra",
+        "issue": "My laptop getting lag, not opening the chrome/edge browser for 5 minutes",
+        "category": "Software Installation",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000009",
+        "username": "ShivamChopra",
+        "issue": "okay i tried these steps it is still lagging. can you raise a ticket for me?",
+        "category": "General Support",
+        "status": "unresolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000010",
+        "username": "Shivamchopra",
+        "issue": "The technical problem is that the keyboard's backlight functionality is not working properly.",
+        "category": "Based on the information provided, this issue can be classified as a Hardware Issue.\n\nSpecifically, it appears to be related to a problem with the keyboard's backlight feature, which is a hardware component of the keyboard itself. The backlight not",
+        "status": "unresolved",
+        "assigned_to": "L1"
     }
 ]

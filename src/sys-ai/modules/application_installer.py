@@ -3,24 +3,34 @@ import os
 import streamlit as st
 import subprocess
 
-APPLICATIONS_FILE = "C:/Users/infolabsuser/Desktop/sys-ai/sys-ai/applications.json"
-APP_FOLDER = "downloads"  # Permanent app folder
+# --- CONFIGURATION ---
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+APP_FOLDER = os.path.join(BASE_DIR, "downloads")  # Safer relative path
+APPLICATIONS_FILE = os.path.join(BASE_DIR, "applications.json")
 
-# Load applications from JSON
+# --- Ensure required folders exist ---
+os.makedirs(APP_FOLDER, exist_ok=True)
+
+# --- Load Applications ---
 def load_applications():
+    """Load list of applications from JSON file."""
     try:
         with open(APPLICATIONS_FILE, "r") as file:
             return json.load(file)
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
-# Save applications to JSON
+# --- Save Applications ---
 def save_applications(applications):
+    """Save updated list of applications to JSON file."""
     with open(APPLICATIONS_FILE, "w") as file:
         json.dump(applications, file, indent=4)
 
-# Scan folder for .exe applications and add them to JSON
+# --- Scan Folder and Update JSON ---
 def scan_and_update_apps():
+    """Scan APP_FOLDER for .exe files and update the JSON list."""
+    os.makedirs(APP_FOLDER, exist_ok=True)  # Ensure folder exists
+
     applications = load_applications()
     existing_apps = {app["name"]: app for app in applications}
 
@@ -36,12 +46,13 @@ def scan_and_update_apps():
 
     save_applications(list(existing_apps.values()))
 
-# UI for Application Installer
+# --- App Installer UI ---
 def application_installer_ui():
+    """User-facing application installer interface."""
     st.title("📦 Application Installer")
     st.write("Select an application and request admin approval.")
 
-    scan_and_update_apps()  # Update app list
+    scan_and_update_apps()
 
     applications = load_applications()
     pending_apps = [app["name"] for app in applications if app["status"] == "pending"]
@@ -53,13 +64,10 @@ def application_installer_ui():
     selected_app = st.selectbox("Select an application:", pending_apps)
 
     if st.button("🔑 Request Admin Approval"):
-        for app in applications:
-            if app["name"] == selected_app:
-                st.success(f"Approval request sent for {selected_app}.")
-                save_applications(applications)
-                st.rerun()
+        st.success(f"Approval request sent for {selected_app}.")
+        st.rerun()
 
-    # Show approved apps ready for installation
+    # --- Approved Apps ---
     approved_apps = [app for app in applications if app["approved"] and app["status"] == "pending"]
 
     if approved_apps:
@@ -69,7 +77,8 @@ def application_installer_ui():
         if st.button("🚀 Install Application"):
             for app in applications:
                 if app["name"] == install_app:
-                    if install_application(app["path"]):
+                    success = install_application(app["path"])
+                    if success:
                         app["status"] = "installed"
                         save_applications(applications)
                         st.success(f"{install_app} installed successfully!")
@@ -77,19 +86,21 @@ def application_installer_ui():
                     else:
                         st.error(f"Installation failed for {install_app}.")
 
-# Function to install application
+# --- Silent Install Function ---
 def install_application(app_path):
+    """Performs a silent install of the selected application."""
     try:
-        subprocess.run([app_path, "/S"], check=True)  # Silent install mode
+        subprocess.run([app_path, "/S"], check=True)
         return True
     except Exception as e:
         st.error(f"Error installing {app_path}: {e}")
         return False
 
-# UI for Admin Approval
+# --- Admin Portal ---
 def admin_approval_ui():
+    """Admin panel for approving pending app installations."""
     st.title("🔑 Admin Approval Portal")
-    print(load_applications())
+
     applications = load_applications()
     pending_requests = [app for app in applications if not app["approved"] and app["status"] == "pending"]
 

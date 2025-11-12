@@ -39,7 +39,7 @@ def update_ticket_status(ticket_id, new_status):
 
 # Customizing Streamlit page
 st.set_page_config(page_title="SYS AI - L1 Support", layout="wide")
-logo_path = "images/inf_logo.png"
+logo_path = "src\sys-ai\images\inf_logo.png"
 if os.path.exists(logo_path):
     st.sidebar.image(logo_path)
 else:
@@ -444,27 +444,25 @@ elif page == "Ticket Classifier":
 # Chatbot
 elif page == "Chatbot":
     st.title("💬 IT Support Chatbot")
-    query = st.text_input("🗣️ Ask something:")
-    if st.button("Get Response", use_container_width=True):
-        if query.strip():
-            response = get_chatbot_response(query)
-            st.info(f"🤖 **Bot:** {response}")
-        else:
-            st.warning("⚠️ Please enter a question.")
 
-elif page == "Log Monitoring":
-    st.title("📑 Log Monitoring")
-    st.write("Check logs for errors and anomalies.")
+    # Initialize session state
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
 
-    if st.button("Check Logs", use_container_width=True):
-        logs = monitor_logs()  # Capture output
-        if logs:
-            st.subheader("Detected Issues")
-            for log, analysis in logs:
-                st.warning(f"⚠️ {log}")
-                st.info(f"🤖 AI Analysis: {analysis}")
+    # Display chat messages
+    for role, message in st.session_state.chat_history:
+        if role == "user":
+            st.chat_message("user").write(message)
         else:
-            st.success("✅ No issues found in the logs.")
+            st.chat_message("assistant").write(message)
+
+    # Chat input
+    if prompt := st.chat_input("Type your message here..."):
+        st.session_state.chat_history.append(("user", prompt))
+        response = get_chatbot_response(prompt, st.session_state.chat_history)
+        st.session_state.chat_history.append(("assistant", response))
+        st.chat_message("assistant").write(response)
+
 
 
 # Auto Troubleshooting
