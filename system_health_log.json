@@ -1,0 +1,37 @@
+[
+    {
+        "timestamp": "2025-11-12 15:00:52",
+        "cpu_usage": 15.0,
+        "ram_usage": 61.2,
+        "disk_usage": 46.2,
+        "suggestion": "Based on the provided system metrics, the overall system health appears to be normal. Here's a summary:\n\n- CPU Usage: 15.0% - This is within a normal range.\n- RAM Usage: 61.2% - This is a bit high but still acceptable.\n- Disk Usage: 46.2% - This is well within the normal range.\n\nSince none of the usage metrics exceed 85%, no immediate action is required. The system is operating normally."
+    },
+    {
+        "timestamp": "2025-11-12 15:01:50",
+        "cpu_usage": 14.2,
+        "ram_usage": 61.1,
+        "disk_usage": 46.2,
+        "suggestion": "Based on the system metrics provided:\n\nCPU Usage: 14.2% - This is within normal levels.\nRAM Usage: 61.1% - This is within normal levels.\nDisk Usage: 46.2% - This is within normal levels.\n\nSystem operating normally.\n\nAll system resources are being utilized below the 85% threshold, indicating that the system is currently functioning properly without any immediate concerns or required actions."
+    },
+    {
+        "timestamp": "2025-11-12 15:12:58",
+        "cpu_usage": 13.3,
+        "ram_usage": 58.9,
+        "disk_usage": 46.2,
+        "suggestion": "Based on the provided system metrics, the system appears to be operating normally. The CPU usage of 13.3%, RAM usage of 58.9%, and disk usage of 46.2% are all within normal ranges and below the 85% threshold."
+    },
+    {
+        "timestamp": "2025-11-12 15:36:17",
+        "cpu_usage": 14.1,
+        "ram_usage": 58.2,
+        "disk_usage": 46.2,
+        "suggestion": "Based on the provided system metrics, the system appears to be operating within normal parameters. The CPU usage at 14.1%, RAM usage at 58.2%, and disk usage at 46.2% are all below the 85% threshold you specified for potential issues.\n\nSystem operating normally."
+    },
+    {
+        "timestamp": "2025-11-12 15:41:13",
+        "cpu_usage": 31.0,
+        "ram_usage": 58.6,
+        "disk_usage": 46.2,
+        "suggestion": "Based on the provided system metrics, the system seems to be operating normally. The CPU usage at 31.0%, RAM usage at 58.6%, and disk usage at 46.2% are all within reasonable levels and do not indicate any immediate issues or high utilization levels above 85%."
+    }
+]
