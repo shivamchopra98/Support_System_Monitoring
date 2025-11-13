@@ -54,10 +54,11 @@ page = st.sidebar.radio(
         "Ticket Classifier",
         # "Log Monitoring",
         "Troubleshoot",
-        "About Company",
+        # "About Company",
         "Application Installer",
-        "Admin Portal",
-        "Proactive Health Agent"
+        "Proactive Health Agent",
+        "System Information",
+        "Admin Portal"
     ]
 )
 
@@ -708,4 +709,53 @@ elif page == "Proactive Health Agent":
                         st.success("✅ No critical events found in last 24 hours.")
                 except Exception as e:
                     st.error(f"⚠️ Log analysis error: {e}")
+# System Information
+elif page == "System Information":
+    st.title("🖥️ System Information Overview")
+
+    from modules.system_info import get_system_info
+
+    with st.spinner("Fetching system information..."):
+        info = get_system_info()
+
+    st.markdown("## Device Overview")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.write(f"**Hostname:** {info.get('hostname', 'N/A')}")
+        st.write(f"**Serial Number:** {info.get('serial_number', 'N/A')}")
+        st.write(f"**Manufacturer:** {info.get('manufacturer', 'N/A')}")
+        st.write(f"**Model:** {info.get('model', 'N/A')}")
+
+    with col2:
+        st.write(f"**Operating System:** {info.get('os', 'N/A')}")
+        st.write(f"**Storage Type:** {info.get('ssd_status', 'N/A')}")
+        st.write(f"**Total RAM:** {info.get('total_ram_gb', 'N/A')} GB")
+
+    st.markdown("---")
+
+    st.markdown("## CPU Information")
+    cpu = info.get("cpu_info", {})
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.write(f"**Model:** {cpu.get('model', 'N/A')}")
+    with col2:
+        st.write(f"**Cores:** {cpu.get('cores', 'N/A')}")
+    with col3:
+        st.write(f"**Threads:** {cpu.get('threads', 'N/A')}")
+
+    st.write(f"**Architecture:** {cpu.get('architecture', 'N/A')}")
+
+    st.markdown("---")
+
+    st.markdown("## Graphics Processor")
+    gpus = info.get("gpu_info", [])
+
+    if gpus:
+        for gpu in gpus:
+            st.write(f"- {gpu}")
+    else:
+        st.write("No GPU information available.")
    

@@ -4,7 +4,7 @@
         "username": "Ram",
         "issue": "laptop not booting up",
         "category": "General Support",
-        "status": "unresolved",
+        "status": "resolved",
         "assigned_to": "L1"
     },
     {
@@ -28,7 +28,7 @@
         "username": "ShivamChopra",
         "issue": "I am getting network connectivity issue",
         "category": "Network Issue",
-        "status": "unresolved",
+        "status": "resolved",
         "assigned_to": "L1"
     },
     {
@@ -84,7 +84,7 @@
         "username": "Shivamchopra",
         "issue": "Network connectivity issue.",
         "category": "Network Issue",
-        "status": "unresolved",
+        "status": "resolved",
         "assigned_to": "L1"
     },
     {
@@ -92,7 +92,7 @@
         "username": "Shivamchopra",
         "issue": "Critical system event log entries within the last 24 hours.",
         "category": "Performance Issue",
-        "status": "unresolved",
+        "status": "resolved",
         "assigned_to": "L1"
     },
     {
@@ -100,7 +100,15 @@
         "username": "Shivamchopra",
         "issue": "Critical system event log entries within the last 24 hours.",
         "category": "Performance Issue",
-        "status": "unresolved",
+        "status": "resolved",
+        "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000014",
+        "username": "Shivamchopra",
+        "issue": "Laptop touchpad or trackpad not functioning correctly.",
+        "category": "Hardware Issue",
+        "status": "resolved",
         "assigned_to": "L1"
     }
 ]

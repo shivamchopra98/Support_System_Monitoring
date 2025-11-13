@@ -33,5 +33,26 @@
         "ram_usage": 58.6,
         "disk_usage": 46.2,
         "suggestion": "Based on the provided system metrics, the system seems to be operating normally. The CPU usage at 31.0%, RAM usage at 58.6%, and disk usage at 46.2% are all within reasonable levels and do not indicate any immediate issues or high utilization levels above 85%."
+    },
+    {
+        "timestamp": "2025-11-12 17:55:15",
+        "cpu_usage": 20.9,
+        "ram_usage": 68.3,
+        "disk_usage": 46.4,
+        "suggestion": "Based on the provided system metrics, here's a summary of the system health:\n\nCPU Usage: 20.9% - Operating normally.\nRAM Usage: 68.3% - Operating normally.\nDisk Usage: 46.4% - Operating normally.\n\nAll usage values are below the 85% threshold, indicating that the system is operating normally. No immediate action is required from the IT team."
+    },
+    {
+        "timestamp": "2025-11-13 09:30:42",
+        "cpu_usage": 23.8,
+        "ram_usage": 68.9,
+        "disk_usage": 47.9,
+        "suggestion": "Based on the provided system metrics, here's the summary:\n\nCPU Usage: 23.8% - Operating normally.\nRAM Usage: 68.9% - Operating normally, but getting close to the 85% threshold.\nDisk Usage: 47.9% - Operating normally.\n\nOverall, the system is operating within normal parameters, but RAM usage is approaching the 85% threshold. The IT team should keep an eye on RAM usage and be prepared to take action if it continues to increase. Potential actions could include:\n\n1. Identify and close any unnecessary applications or processes consuming excessive RAM.\n2. Clear browser caches and temporary files to free up RAM.\n3. Restart memory-intensive applications or services to release memory.\n4. As a last resort, reboot the system to release any memory leaks or fragmentation.\n\nIf RAM usage continues to rise above 85%, these actions should be taken promptly to prevent system performance issues or instability."
+    },
+    {
+        "timestamp": "2025-11-13 09:34:03",
+        "cpu_usage": 16.9,
+        "ram_usage": 72.0,
+        "disk_usage": 47.6,
+        "suggestion": "Based on the provided system metrics, the RAM usage is relatively high at 72.0%.\n\nSummary and recommended actions:\n\nThe CPU usage (16.9%) and disk usage (47.6%) are within normal ranges. However, the RAM usage (72.0%) is elevated, though not critically high.\n\nTo address the high RAM usage, the IT team should take the following actions:\n\n1. Identify and terminate any unnecessary or resource-intensive processes that might be consuming excessive RAM.\n2. Restart memory-intensive applications or services to free up RAM.\n3. Consider adding more RAM to the system if the issue persists after taking the above steps.\n\nMonitoring the RAM usage and taking timely action can prevent performance issues and potential system crashes due to memory exhaustion."
     }
 ]
