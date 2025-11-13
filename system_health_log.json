@@ -54,5 +54,19 @@
         "ram_usage": 72.0,
         "disk_usage": 47.6,
         "suggestion": "Based on the provided system metrics, the RAM usage is relatively high at 72.0%.\n\nSummary and recommended actions:\n\nThe CPU usage (16.9%) and disk usage (47.6%) are within normal ranges. However, the RAM usage (72.0%) is elevated, though not critically high.\n\nTo address the high RAM usage, the IT team should take the following actions:\n\n1. Identify and terminate any unnecessary or resource-intensive processes that might be consuming excessive RAM.\n2. Restart memory-intensive applications or services to free up RAM.\n3. Consider adding more RAM to the system if the issue persists after taking the above steps.\n\nMonitoring the RAM usage and taking timely action can prevent performance issues and potential system crashes due to memory exhaustion."
+    },
+    {
+        "timestamp": "2025-11-13 11:45:18",
+        "cpu_usage": 15.7,
+        "ram_usage": 70.5,
+        "disk_usage": 47.9,
+        "suggestion": "Based on the provided system metrics, the system seems to be operating within normal parameters. Here's a summary:\n\n- CPU Usage: 15.7% - This is well below the 85% threshold, indicating that the CPU is not overloaded.\n- RAM Usage: 70.5% - While this is on the higher side, it's still below the 85% threshold.\n- Disk Usage: 47.9% - The disk usage is comfortably below the 85% threshold.\n\nSince none of the metrics exceed the 85% usage threshold, the system appears to be operating normally at the moment. No immediate actions are required from the IT team."
+    },
+    {
+        "timestamp": "2025-11-13 11:56:25",
+        "cpu_usage": 20.7,
+        "ram_usage": 67.9,
+        "disk_usage": 47.9,
+        "suggestion": "Based on the provided system metrics, the system health seems to be operating within normal ranges. However, the RAM usage is slightly elevated at 67.9%. Here's a summary:\n\nCPU Usage (20.7%): Normal\nRAM Usage (67.9%): Slightly elevated, but not critical\nDisk Usage (47.9%): Normal\n\nSince none of the usage levels exceed the 85% threshold, no immediate actions are required. However, to keep the system running optimally, the IT team should consider the following proactive measures:\n\n1. Identify and close any unused or non-essential applications that might be consuming RAM.\n2. Check for any memory leaks or resource-intensive processes and address them accordingly.\n3. If the RAM usage continues to increase, consider adding more physical memory to the system.\n\nOverall, the system appears to be operating normally, but it's a good practice to monitor the RAM usage closely and take appropriate measures if it continues to rise."
     }
 ]
