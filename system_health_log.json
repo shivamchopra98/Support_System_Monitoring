@@ -56,6 +56,39 @@
         "suggestion": "Based on the provided system metrics, the RAM usage is relatively high at 72.0%.\n\nSummary and recommended actions:\n\nThe CPU usage (16.9%) and disk usage (47.6%) are within normal ranges. However, the RAM usage (72.0%) is elevated, though not critically high.\n\nTo address the high RAM usage, the IT team should take the following actions:\n\n1. Identify and terminate any unnecessary or resource-intensive processes that might be consuming excessive RAM.\n2. Restart memory-intensive applications or services to free up RAM.\n3. Consider adding more RAM to the system if the issue persists after taking the above steps.\n\nMonitoring the RAM usage and taking timely action can prevent performance issues and potential system crashes due to memory exhaustion."
     },
     {
+        "timestamp": "2025-11-13 14:54:45",
+        "cpu_usage": 16.6,
+        "ram_usage": 69.6,
+        "disk_usage": 48.0,
+        "suggestion": "Based on the provided system metrics, here's a summary of the system health:\n\nCPU Usage (16.6%): Operating within normal range.\nRAM Usage (69.6%): Elevated but still within an acceptable range.\nDisk Usage (48.0%): Operating within normal range.\n\nSince none of the usage metrics exceed 85%, the system appears to be operating normally. However, it's worth keeping an eye on the RAM usage as it's approaching higher levels.\n\nSystem operating normally."
+    },
+    {
+        "timestamp": "2025-11-13 14:57:06",
+        "cpu_usage": 47.5,
+        "ram_usage": 69.1,
+        "disk_usage": 48.0,
+        "suggestion": "Based on the provided metrics:\n\n- CPU Usage: 47.5% (Normal)\n- RAM Usage: 69.1% (Slightly High but Normal)\n- Disk Usage: 48.0% (Normal)\n\nAll system metrics are within normal operating ranges below 85% utilization.\n\nSystem operating normally."
+    },
+    {
+        "timestamp": "2025-11-13 15:01:26",
+        "cpu_usage": 53.2,
+        "ram_usage": 71.5,
+        "disk_usage": 48.0,
+        "suggestion": "Based on the provided system metrics, here's a summary of the system health:\n\nCPU Usage: 53.2% - Operating within normal range.\nRAM Usage: 71.5% - Slightly elevated but still within acceptable limits.\nDisk Usage: 48.0% - Operating within normal range.\n\nSince none of the usage metrics exceed the 85% threshold, the system appears to be operating normally at this time. No immediate actions are required from the IT team."
+    },
+    {
+        "timestamp": "2025-11-13 15:04:10",
+        "cpu_usage": 65.8,
+        "ram_usage": 70.2,
+        "disk_usage": 48.0,
+        "suggestion": "Based on the system metrics provided:\n\n- CPU Usage: 65.8% (Normal)\n- RAM Usage: 70.2% (Slightly High)\n- Disk Usage: 48.0% (Normal)\n\nThe CPU and disk usage levels are within normal ranges. However, the RAM usage is slightly high at 70.2%.\n\nRecommended Actions:\n1. Check for any memory-intensive processes or applications running and consider closing them if not required.\n2. Clear the system cache and temporary files to free up RAM.\n3. If the issue persists, restart the system to release any memory leaks.\n\nIf the RAM usage continues to rise above 85%, consider adding more physical RAM or optimizing the system's memory management."
+    },
+    {
+        "timestamp": "2025-11-13 15:04:46",
+        "cpu_usage": 76.1,
+        "ram_usage": 68.8,
+        "disk_usage": 48.0,
+        "suggestion": "Based on the provided system metrics, here's a summary of the system health:\n\nCPU Usage: 76.1% - This is slightly elevated but still within an acceptable range.\n\nRAM Usage: 68.8% - This is also a bit high but not critically concerning.\n\nDisk Usage: 48.0% - The disk usage is well within normal limits.\n\nSince none of the metrics exceed the 85% threshold, the system appears to be operating normally at the moment. However, you may want to keep an eye on CPU and RAM usage to ensure they don't continue to rise."
         "timestamp": "2025-11-13 11:45:18",
         "cpu_usage": 15.7,
         "ram_usage": 70.5,
