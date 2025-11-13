@@ -110,5 +110,13 @@
         "category": "Hardware Issue",
         "status": "resolved",
         "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000015",
+        "username": "Shivamchopra",
+        "issue": "Installation of Visual Studio Code on the user's system.",
+        "category": "Software Issue",
+        "status": "unresolved",
+        "assigned_to": "L1"
     }
 ]
