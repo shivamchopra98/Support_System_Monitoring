@@ -13,6 +13,13 @@ import psutil
 import shutil
 import time
 import os
+import getpass
+
+
+current_user = getpass.getuser()   # automatically gets Windows username
+ADMIN_USERS = ["Administrator", "ShivamChopra", "admin"]  # add allowed admin users
+
+
 TICKETS_FILE = "tickets.json"
 
 
@@ -58,7 +65,8 @@ page = st.sidebar.radio(
         "Application Installer",
         "Proactive Health Agent",
         "System Information",
-        "Admin Portal"
+        *([ "Admin Portal" ] if current_user in ADMIN_USERS else [])
+
     ]
 )
 
@@ -485,6 +493,13 @@ elif page == "Troubleshoot":
 
 # Admin Portal
 elif page == "Admin Portal":
+
+    # 🔐 Access Control — allow only admin users
+    if current_user not in ADMIN_USERS:
+        st.error("⛔ You are not authorized to access the Admin Portal.")
+        st.stop()
+
+    # ✅ Only admins will reach these lines
     st.title("🎫 Admin Portal")
     st.write("Manage and resolve tickets, and approve app installations.")
 
