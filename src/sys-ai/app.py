@@ -164,12 +164,8 @@ if page == "Home":
         """
         Welcome to the **AI-Powered IT Support Assistant**!  
         This tool automates **L1 support tasks**, provides **system insights**, and enhances troubleshooting efficiency.  
-
-      
         """
     )
-
-    # st.title("📊 Proactive System Health Predictions")
 
     # Load Bootstrap & Custom Styles
     st.markdown("""
@@ -191,22 +187,13 @@ if page == "Home":
             [data-testid="stSidebar"] * {
                 color: #fff !important;
             }
-            
-            /* 3D Neumorphic Cards */
             .usage-card {
                 background: #E3E3E3;
                 border-radius: 20px;
                 padding: 20px;
                 text-align: center;
                 box-shadow: 8px 8px 16px #b8b8b8, -8px -8px 16px #ffffff;
-                transition: all 0.3s ease-in-out;
             }
-            .usage-card:hover {
-                box-shadow: 4px 4px 8px #b8b8b8, -4px -4px 8px #ffffff;
-                transform: scale(1.05);
-            }
-
-            /* Circular Progress Gauges */
             .gauge-container {
                 width: 140px;
                 height: 140px;
@@ -236,104 +223,93 @@ if page == "Home":
                 font-size: 24px;
                 font-weight: bold;
             }
-            
-            /* Dynamic colors */
-            .ram { background: #4CAF50; }  /* Green */
-            .cpu { background: #FFC107; }  /* Yellow */
-            .disk { background: #F44336; } /* Red */
-
-            /* Status Cards */
-            .status-good {
-                background-color: #D4EDDA; /* Light Green */
-                border-left: 5px solid green;
-                padding: 15px;
-                border-radius: 10px;
-                box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            }
-            .status-warning {
-                background-color: #FFF3CD; /* Light Yellow */
-                border-left: 5px solid orange;
-                padding: 15px;
-                border-radius: 10px;
-                box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            }
-            .status-critical {
-                background-color: #F8D7DA; /* Light Red */
-                border-left: 5px solid red;
-                padding: 15px;
-                border-radius: 10px;
-                box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            }
+            .ram { background: #4CAF50; }
+            .cpu { background: #FFC107; }
+            .disk { background: #F44336; }
+            .status-good { background-color: #D4EDDA; border-left: 5px solid green; padding: 15px; border-radius: 10px; }
+            .status-warning { background-color: #FFF3CD; border-left: 5px solid orange; padding: 15px; border-radius: 10px; }
+            .status-critical { background-color: #F8D7DA; border-left: 5px solid red; padding: 15px; border-radius: 10px; }
         </style>
     """, unsafe_allow_html=True)
 
-    # Fetch Predictions
-    predictions = system_health_prediction()
-    ram_usage = predictions["ram"]
-    cpu_usage = predictions["cpu"]
-    disk_usage = predictions["disk"]
+    # ------------------------------------------
+    # FIXED LOGIC: Call proactive_health correctly
+    # ------------------------------------------
+    try:
+        summary, suggestion = system_health_prediction()
 
-    if not predictions:
-        st.warning("No predictions available.")
-    else:
-        st.subheader("🔍 System Health Overview")
+        metrics = summary.get("metrics", {})
+        ram_usage = metrics.get("ram_usage", 0)
+        cpu_usage = metrics.get("cpu_usage", 0)
+        disk_usage = metrics.get("disk_usage", 0)
 
-        # Displaying 3D Neumorphic Cards with Colored Gauges
-        st.markdown(f"""
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <div class="usage-card">
-                        <h5>💾 RAM Usage</h5>
-                        <div class="gauge-container ram">
-                            <span class="gauge-text">{ram_usage}%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="usage-card">
-                        <h5>💻 CPU Usage</h5>
-                        <div class="gauge-container cpu">
-                            <span class="gauge-text">{cpu_usage}%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="usage-card">
-                        <h5>🖴 Disk Usage</h5>
-                        <div class="gauge-container disk">
-                            <span class="gauge-text">{disk_usage}%</span>
-                        </div>
+        system_status = summary.get("status", "Unknown")
+        prediction = suggestion
+
+    except Exception as e:
+        st.error(f"⚠️ Failed to load system health: {e}")
+        st.stop()
+
+    # ------------------------------------------
+    # Display System Health Overview
+    # ------------------------------------------
+    st.subheader("🔍 System Health Overview")
+
+    st.markdown(f"""
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="usage-card">
+                    <h5>💾 RAM Usage</h5>
+                    <div class="gauge-container ram">
+                        <span class="gauge-text">{ram_usage}%</span>
                     </div>
                 </div>
             </div>
-        """, unsafe_allow_html=True)
-
-        # Display System Health Status
-        status_class = "status-good" if predictions["status"] == "Good" else "status-warning" if predictions["status"] == "Warning" else "status-critical"
-
-        st.markdown(f"""
-            <div class="mt-4 {status_class}">
-                <h4><strong>🩺 Health Status:</strong> {predictions['status']}</h4>
-                <p><strong>Prediction:</strong> {predictions['prediction']}</p>
+            <div class="col-md-4">
+                <div class="usage-card">
+                    <h5>💻 CPU Usage</h5>
+                    <div class="gauge-container cpu">
+                        <span class="gauge-text">{cpu_usage}%</span>
+                    </div>
+                </div>
             </div>
-        """, unsafe_allow_html=True)
-        st.markdown("---")
-        st.markdown(
-        """
-        
-        📌 **Features:**  
-        - **🔍 AI-Powered Ticket Classification** - Automatically categorize and prioritize tickets.  
-        - **🤖 Intelligent Chatbot** - AI-driven assistant for quick issue resolution.  
-        - **📊 Log Monitoring & Anomaly Detection** - Detects unusual system behavior in real-time.  
-        - **🔄 Troubleshooting & Service Restart** - Identifies and restarts faulty services.  
-        - **🎟️ Admin Ticket Management** - Track, update, and resolve IT support tickets.  
-        - **🖥️ System Information Dashboard** - View real-time CPU, RAM, Disk, and last shutdown details.  
-        - **📦 Application Installer with Admin Approval** - Manage and install applications securely.  
-        - **🛡️ Proactive System Health Predictions** - AI-powered predictive analytics to prevent failures.  
+            <div class="col-md-4">
+                <div class="usage-card">
+                    <h5>🖴 Disk Usage</h5>
+                    <div class="gauge-container disk">
+                        <span class="gauge-text">{disk_usage}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
 
-        Use the **sidebar** to navigate between different sections. 🚀  
-        """
+    # Status badge color
+    status_class = (
+        "status-good" if system_status == "Good" 
+        else "status-warning" if system_status == "Warning" 
+        else "status-critical"
     )
+
+    st.markdown(f"""
+        <div class="mt-4 {status_class}">
+            <h4><strong>🩺 Health Status:</strong> {system_status}</h4>
+            <p><strong>Prediction:</strong> {prediction}</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+    st.markdown("""
+        📌 **Features:**  
+        - 🔍 AI-Powered Ticket Classification  
+        - 🤖 Intelligent Chatbot  
+        - 📊 Log Monitoring & Anomaly Detection  
+        - 🔄 Troubleshooting & Service Restart  
+        - 🎟️ Admin Ticket Management  
+        - 🖥️ System Information Dashboard  
+        - 📦 Application Installer with Admin Approval  
+        - 🛡️ Proactive System Health Predictions  
+    """)
 
 elif page == "Ticket Classifier":
     st.title("📌 Ticket Classifier")
@@ -654,61 +630,73 @@ elif page == "Application Installer":
     
 # 🩺 Proactive Health Agent
 elif page == "Proactive Health Agent":
-    import streamlit as st
-    try:
-        from modules.system_health_agent import run_health_scan
-        from modules.system_event_monitor import run_event_log_scan
-    except Exception as e:
-        st.error(f"⚠️ Import error: {e}")
-        st.stop()
-
     st.title("Proactive System Health Agent")
     st.markdown("""
-        This AI-powered agent monitors:
+        This module scans:
         - CPU / RAM / Disk performance  
-        - Windows Event Viewer logs (critical / error / warning)  
-
-        It automatically raises support tickets if major issues are detected.
+        - Windows Update status  
+        - Critical Event Viewer logs  
+        - And gives AI-powered recommendations
     """)
 
-    st.markdown("---")
+    from modules.proactive_health import system_health_prediction
 
-    col1, col2 = st.columns(2)
+    if st.button("🚀 Run Full System Health Scan", use_container_width=True):
+        with st.spinner("Running system-wide diagnostics..."):
+            try:
+                summary, suggestion = system_health_prediction()
 
-    with col1:
-        st.subheader("📊 System Performance")
-        if st.button("🚀 Run System Scan", use_container_width=True):
-            with st.spinner("Running system scan..."):
-                try:
-                    metrics, suggestion, ticket = run_health_scan()
-                    st.json(metrics)
-                    st.info(suggestion)
-                    if ticket:
-                        st.success(
-                            f"🎫 Ticket Raised: **{ticket['ticket_id']}** — Category: **{ticket['category']}**"
-                        )
-                    else:
-                        st.success("✅ System performance is stable.")
-                except Exception as e:
-                    st.error(f"⚠️ Scan error: {e}")
+                # -------------------------
+                # 🔔 POPUP FOR CRITICAL UPDATE / REBOOT
+                # -------------------------
+                needs_reboot = summary["updates"].get("reboot_required", False)
+                pending_updates = summary["updates"].get("pending_updates", [])
 
-    with col2:
-        st.subheader("🧾 Windows Event Logs")
-        if st.button("📋 Check Event Viewer Logs", use_container_width=True):
-            with st.spinner("Analyzing Event Viewer logs..."):
-                try:
-                    logs, summary, ticket = run_event_log_scan()
-                    if logs:
-                        st.json(logs[:5])
-                    st.info(summary)
-                    if ticket:
-                        st.success(
-                            f"🎫 Ticket Raised: **{ticket['ticket_id']}** — Category: **{ticket['category']}**"
-                        )
-                    else:
-                        st.success("✅ No critical events found in last 24 hours.")
-                except Exception as e:
-                    st.error(f"⚠️ Log analysis error: {e}")
+                if needs_reboot:
+                    st.error("🔄 **System restart required to finish pending updates!**")
+
+                if pending_updates:
+                    st.warning(f"⬆ **{len(pending_updates)} Windows updates are pending installation.**")
+
+                # -------------------------
+                # 📊 METRICS
+                # -------------------------
+                st.subheader("📊 System Metrics")
+                st.json(summary["metrics"])
+
+                # -------------------------
+                # ⬆ WINDOWS UPDATE INFO
+                # -------------------------
+                st.subheader("⬆ Windows Update Status")
+                st.json(summary["updates"])
+
+                # -------------------------
+                # 🚨 CRITICAL EVENT LOGS
+                # -------------------------
+                st.subheader("🚨 Critical Event Logs (Last 24 hours)")
+                if summary["critical_event_logs"]:
+                    st.json(summary["critical_event_logs"])
+                else:
+                    st.success("No critical event logs found.")
+
+                # -------------------------
+                # ⚠ ALERTS
+                # -------------------------
+                st.subheader("⚠ Alerts")
+                if summary["alerts"]:
+                    for alert in summary["alerts"]:
+                        st.warning(alert)
+                else:
+                    st.success("System is healthy.")
+
+                # -------------------------
+                # 🤖 AI SUMMARY
+                # -------------------------
+                st.subheader("🤖 AI Recommendation")
+                st.info(suggestion)
+
+            except Exception as e:
+                st.error(f"⚠️ Error running scan: {e}")
 # System Information
 elif page == "System Information":
     st.title("🖥️ System Information Overview")
