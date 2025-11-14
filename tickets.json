@@ -118,5 +118,61 @@
         "category": "Software Issue",
         "status": "unresolved",
         "assigned_to": "L1"
+    },
+    {
+        "ticket_id": "INC0000016",
+        "username": "ShivamChopra",
+        "hostname": "INL-8HKKTQ2",
+        "location": "Chennai",
+        "issue": "Laptop touchpad/mousepad not functioning properly.",
+        "category": "Hardware Issue",
+        "status": "unresolved",
+        "assigned_to": "L1",
+        "timestamp": "2025-11-14 09:32:17",
+        "device_info": {
+            "manufacturer": "Dell Inc.",
+            "model": "Latitude 5490",
+            "serial_number": "8HKKTQ2"
+        }
+    },
+    {
+        "ticket_id": "INC0000017",
+        "username": "ShivamChopra",
+        "hostname": "INL-8HKKTQ2",
+        "location": "Chennai",
+        "issue": "Technical problem statement: Laptop display screen issue.",
+        "category": "Hardware Issue",
+        "status": "unresolved",
+        "assigned_to": "L1",
+        "timestamp": "2025-11-14 10:09:57",
+        "device_info": {
+            "manufacturer": "Dell Inc.",
+            "model": "Latitude 5490",
+            "serial_number": "8HKKTQ2"
+        }
+    },
+    {
+        "ticket_id": "INC0000018",
+        "username": "Shivamchopra",
+        "issue": "Sure, I'd be happy to help you with your mousepad issue. Please provide me with more details about the problem you're facing with your mousepad, and I'll do my best to assist you.",
+        "category": "Hardware Issue",
+        "status": "unresolved",
+        "assigned_to": "L1",
+        "hostname": "INL-8HKKTQ2",
+        "location": "Unknown",
+        "timestamp": "2025-11-14 10:23:13",
+        "device_info": "{\n  \"os\": \"Windows\",\n  \"os_version\": \"10.0.26200\",\n  \"processor\": \"Intel64 Family 6 Model 142 Stepping 10, GenuineIntel\",\n  \"cpu_count\": 8,\n  \"ram_gb\": 15.86,\n  \"disk\": {\n    \"C:\\\\\": {\n      \"total\": 255170965504,\n      \"used\": 122265370624,\n      \"free\": 132905594880,\n      \"percent\": 47.9\n    }\n  },\n  \"ip_address\": \"172.16.1.41\",\n  \"hostname\": \"INL-8HKKTQ2\"\n}"
+    },
+    {
+        "ticket_id": "INC0000019",
+        "username": "Shivamchopra",
+        "issue": "Okay, please provide some more details about the issue you're facing with your laptop screen. What exactly is the problem? Is the screen not turning on, displaying incorrectly, flickering, or something else?",
+        "category": "Hardware Issue",
+        "status": "unresolved",
+        "assigned_to": "L1",
+        "hostname": "INL-8HKKTQ2",
+        "location": "Chennai",
+        "timestamp": "2025-11-14 10:28:21",
+        "device_info": "{\n  \"os\": \"Windows\",\n  \"os_version\": \"10.0.26200\",\n  \"processor\": \"Intel64 Family 6 Model 142 Stepping 10, GenuineIntel\",\n  \"cpu_count\": 8,\n  \"ram_gb\": 15.86,\n  \"disk\": {\n    \"C:\\\\\": {\n      \"total\": 255170965504,\n      \"used\": 122272407552,\n      \"free\": 132898557952,\n      \"percent\": 47.9\n    }\n  },\n  \"ip_address\": \"172.16.1.41\",\n  \"hostname\": \"INL-8HKKTQ2\"\n}"
     }
 ]
