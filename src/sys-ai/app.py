@@ -16,6 +16,33 @@ import shutil
 import time
 import os
 import getpass
+import platform
+
+def launch_quick_assist_user():
+    if platform.system() != "Windows":
+        st.error("Quick Assist is only available on Windows.")
+        return
+
+    try:
+        os.system(
+            r'start "" "shell:appsFolder\MicrosoftCorporationII.QuickAssist_8wekyb3d8bbwe!App"'
+        )
+        st.info("Quick Assist launched — please wait for the IT team to give you a security code.")
+    except Exception as e:
+        st.error(f"Could not launch Quick Assist: {e}")
+        
+def launch_quick_assist_admin():
+    if platform.system() != "Windows":
+        st.error("Quick Assist is only available on Windows.")
+        return
+
+    try:
+        os.system(
+            r'start "" "shell:appsFolder\MicrosoftCorporationII.QuickAssist_8wekyb3d8bbwe!App"'
+        )
+        st.success("Quick Assist opened — generate the security code and share it with the user.")
+    except Exception as e:
+        st.error(f"Failed to launch Quick Assist: {e}")
 
 
 current_user = getpass.getuser()   # automatically gets Windows username
@@ -496,7 +523,7 @@ elif page == "Troubleshoot":
 
 # Admin Portal
 elif page == "Admin Portal":
-
+    
     # 🔐 Access Control — allow only admin users
     if current_user not in ADMIN_USERS:
         st.error("⛔ You are not authorized to access the Admin Portal.")
@@ -638,11 +665,20 @@ elif page == "Admin Portal":
 
         # **Application Approval Section**
         admin_approval_ui()
+        
+# --------------------------
+# Remote Assistance (Admin)
+# --------------------------
+st.markdown("---")
+st.subheader("🖥 Remote Assistance")
+
+if st.button("Launch Quick Assist (Admin)", use_container_width=True):
+    launch_quick_assist_admin()
+           
     
-    
-    # --------------------------
-    # IT TEAM: Live Chat Console
-    # --------------------------
+# --------------------------
+# IT TEAM: Live Chat Console
+# --------------------------
     st.markdown("---")
     st.subheader("💬 Live Chat — IT Console")
 
@@ -818,7 +854,14 @@ elif page == "System Information":
 # LIVE CHAT: User Support Page
 # ------------------------------
 elif page == "Chat Support":
+    # Header row with button on RIGHT
+    col_left, col_right = st.columns([8, 2])
+    
     st.title("🆘 Live Chat — IT Support")
+    
+    with col_right:
+        if st.button("🔗 Give Remote Access", use_container_width=True):
+            launch_quick_assist_user()
 
     st.markdown(
         """
