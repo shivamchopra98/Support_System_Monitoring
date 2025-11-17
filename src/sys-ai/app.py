@@ -8,6 +8,8 @@ from modules.about_company import about_company_ui
 from modules.application_installer import application_installer_ui, admin_approval_ui
 from modules.proactive_health import system_health_prediction
 from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
+from modules.chat_support import add_message, get_chat_for_user, get_active_users, load_chat
+
 import pandas as pd
 import psutil
 import shutil
@@ -58,6 +60,7 @@ page = st.sidebar.radio(
     [
         "Home",
         "Chatbot",
+        "Chat Support",
         "Ticket Classifier",
         # "Log Monitoring",
         "Troubleshoot",
@@ -635,6 +638,55 @@ elif page == "Admin Portal":
 
         # **Application Approval Section**
         admin_approval_ui()
+    
+    
+    # --------------------------
+    # IT TEAM: Live Chat Console
+    # --------------------------
+    st.markdown("---")
+    st.subheader("💬 Live Chat — IT Console")
+
+    from modules.chat_support import get_active_users, get_chat_for_user, add_message
+
+    active_users = get_active_users()
+
+    if not active_users:
+        st.info("No active user chats yet.")
+    else:
+        selected_user = st.selectbox("Select a user:", active_users)
+
+        st.markdown(f"### Conversation with: **{selected_user}**")
+        conv = get_chat_for_user(selected_user)
+
+        if not conv:
+            st.info("No messages yet.")
+        else:
+            for msg in conv:
+                if msg["role"] == "user":
+                    st.chat_message("user").write(msg["message"])
+                else:
+                    st.chat_message("assistant").write(f"🛠 IT Team: {msg['message']}")
+
+        # ---- Reply Mechanism ----
+        reply_key = f"reply_{selected_user}"
+        if reply_key not in st.session_state:
+            st.session_state[reply_key] = ""
+
+        def send_reply():
+            reply = st.session_state[reply_key].strip()
+            if reply:
+                add_message(selected_user, "it", reply)
+                st.session_state[reply_key] = ""
+                st.rerun()
+
+        input_col, send_col, refresh_col = st.columns([8, 1.2, 1.8])
+        with input_col:
+            st.text_input("Reply to user", key=reply_key)
+        with send_col:
+            st.button("Send", key=f"send_{selected_user}", on_click=send_reply, use_container_width=True)
+        with refresh_col:
+            if st.button("Refresh Chat", key=f"refresh_{selected_user}", use_container_width=True):
+                st.rerun()
 
 # About Company
 elif page == "About Company":
@@ -761,4 +813,82 @@ elif page == "System Information":
             st.write(f"- {gpu}")
     else:
         st.write("No GPU information available.")
-   
+
+# ------------------------------
+# LIVE CHAT: User Support Page
+# ------------------------------
+elif page == "Chat Support":
+    st.title("🆘 Live Chat — IT Support")
+
+    st.markdown(
+        """
+        This connects you directly to the IT team.  
+        Try the suggested fixes before escalating, or press **Escalate to IT** to create a ticket.
+        """
+    )
+
+    # Quick suggestions for common issues (small helper UI)
+    with st.expander("Quick Troubleshooting Suggestions"):
+        st.markdown("- **Internet**: Restart router, forget & reconnect Wi-Fi, run Network Troubleshooter.")
+        st.markdown("- **Printer**: Check power & connection, restart Print Spooler service.")
+        st.markdown("- **VPN**: Verify credentials, restart VPN client, check network.")
+        st.markdown("- **Slow PC**: Close heavy apps, restart, check disk usage.")
+
+    # Load & display the user's conversation
+    st.markdown("### 💬 Conversation with IT")
+    convo = get_chat_for_user(current_user)
+
+    if not convo:
+        st.info("No messages yet. Describe your issue below to connect to IT.")
+    else:
+        for msg in convo:
+            # Render user messages as user and IT replies as assistant.
+            if msg.get("role") == "user":
+                st.chat_message("user").write(msg.get("message"))
+            else:
+                st.chat_message("assistant").write(f"🛠 IT Team: {msg.get('message')}")
+
+    st.markdown("---")
+
+    # --------------------------
+    # SAFE INPUT CLEARING LOGIC
+    # --------------------------
+    if "chat_input" not in st.session_state:
+        st.session_state.chat_input = ""
+
+    def send_message():
+        """Send message and clear input safely."""
+        message = st.session_state.chat_input.strip()
+        if message:
+            add_message(current_user, "user", message)
+            st.session_state.chat_input = ""   # SAFE HERE
+            st.rerun()
+
+    # Input area & actions (aligned)
+    input_col, send_col, refresh_col = st.columns([8, 1.2, 1.8])
+    with input_col:
+        st.text_input("Message to IT", key="chat_input")
+    with send_col:
+        st.button("Send", use_container_width=True, on_click=send_message)
+    with refresh_col:
+        if st.button("Refresh", use_container_width=True):
+            st.rerun()
+
+    st.markdown("---")
+
+    # --------------------------
+    # Escalate -> create ticket
+    # --------------------------
+    if st.button("Escalate to IT — Create Ticket"):
+        try:
+            issue_text = convo[-1]["message"] if convo else "User requested escalation via chat."
+            new_ticket = save_ticket(issue_text)
+
+            # Notify IT in chat
+            add_message(current_user, "user", f"Escalation: Ticket created {new_ticket.get('ticket_id')}")
+
+            st.success(f"Escalation created. Ticket ID: {new_ticket.get('ticket_id')}")
+            st.rerun()
+
+        except Exception as e:
+            st.error(f"Failed to create ticket: {e}")
