@@ -150,7 +150,7 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
-system_health_log.json
+.json
 
 
 # Pyre type checker

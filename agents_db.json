@@ -1,0 +1,22 @@
+{
+    "INL-INL-CHNLAB01-e25a0387": {
+        "agent_id": "INL-INL-CHNLAB01-e25a0387",
+        "hostname": "INL-CHNLAB01",
+        "username": "Labuser",
+        "os": "Windows-11-10.0.26100-SP0",
+        "ip_address": "172.16.1.60",
+        "metrics": {
+            "cpu_usage": 1.4,
+            "ram_usage": 40.7,
+            "disk_usage": 49.8
+        },
+        "device_info": {
+            "hostname": "INL-CHNLAB01",
+            "manufacturer": "AMD64",
+            "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+            "platform": "Windows-11-10.0.26100-SP0",
+            "boot_time": 1763457675.8658154
+        },
+        "last_seen": 1763544487.424167
+    }
+}
