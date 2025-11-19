@@ -41,25 +41,56 @@ def generate_ticket_id():
 # 2) 🧠 Summarize Issue (Claude)
 # -------------------------------------------------------------
 def summarize_issue(user_text):
+    """
+    Extract a short, clean issue title (3–6 words) such as:
+    - Network Connectivity Issue
+    - System Heating Issue
+    - Slow Performance Issue
+    - Authentication Failure
+    - Application Crash Issue
+    """
+
     try:
         model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
 
+        prompt = f"""
+        Convert the user's message into a short IT issue title.
+        Rules:
+        - Only return 3–6 words.
+        - No sentences.
+        - No suggestions.
+        - No greetings.
+        - Pure issue name only.
+        
+        Examples:
+        User: My WiFi keeps disconnecting.
+        Output: Network Connectivity Issue
+        
+        User: My laptop is getting extremely hot.
+        Output: System Heating Issue
+        
+        User: I cannot login to my system.
+        Output: Authentication Issue
+        
+        User: {user_text}
+        Output:
+        """
+
         body = json.dumps({
             "anthropic_version": "bedrock-2023-05-31",
-            "max_tokens": 80,
-            "system": "Summarize the user issue into a short technical problem title.",
+            "max_tokens": 30,
             "messages": [
-                {"role": "user", "content": [{"type": "text", "text": user_text}]}
+                {"role": "user", "content": [{"type": "text", "text": prompt}]}
             ]
         })
 
         response = bedrock.invoke_model(modelId=model_id, body=body)
         result = json.loads(response["body"].read())
-
         return result["content"][0]["text"].strip()
 
     except Exception:
-        return user_text[:80]
+        # Fallback – return first words as title
+        return user_text.split(".")[0][:50]
 
 
 # -------------------------------------------------------------

@@ -7,3 +7,9 @@ pypdf2
 scikit-learn
 matplotlib
 numpy
+psutil
+requests
+pywin32
+fastapi
+uvicorn[standard]
+pydantic
