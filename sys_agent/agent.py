@@ -10,6 +10,49 @@ import os
 import uuid
 import webbrowser
 
+def launch_quick_assist():
+    """
+    Launch Quick Assist (Store version + Win32 version support)
+    """
+
+    # 1) Try launching Microsoft Store Quick Assist via AppModelID
+    try:
+        app_id = "MicrosoftCorporationII.QuickAssist_8wekyb3d8bbwe!App"
+        subprocess.Popen(["explorer.exe", f"shell:AppsFolder\\{app_id}"])
+        return True, "Launched Quick Assist (Store App via AppID)"
+    except Exception as e:
+        pass
+
+    # 2) Try URI protocol
+    try:
+        subprocess.Popen(["explorer.exe", "ms-quickassist:"])
+        return True, "Launched Quick Assist via URI"
+    except:
+        pass
+
+    # 3) Try System32 version
+    sys32_exe = r"C:\Windows\System32\quickassist.exe"
+    if os.path.exists(sys32_exe):
+        try:
+            subprocess.Popen([sys32_exe])
+            return True, "Launched Quick Assist (System32)"
+        except:
+            pass
+
+    # 4) Try WindowsApps folder
+    import glob
+    base = r"C:\Program Files\WindowsApps"
+    try:
+        for folder in glob.glob(os.path.join(base, "MicrosoftCorporationII.QuickAssist_*")):
+            exe = os.path.join(folder, "QuickAssist.exe")
+            if os.path.exists(exe):
+                subprocess.Popen(["explorer.exe", exe])
+                return True, f"Launched Quick Assist (Store EXE via explorer)"
+    except:
+        pass
+
+    return False, "Failed to launch Quick Assist"
+
 # configure your backend url here
 BACKEND_URL = "http://172.16.1.41:8000"   # change as needed
 
@@ -109,8 +152,8 @@ def run_command(cmd):
             subprocess.run(["shutdown", "/r", "/t", "5"], shell=True)
             return True, "Restart triggered"
         if ctype == "quick_assist":
-            os.startfile("ms-quickassist:")
-            return True, "Quick Assist launched"
+            success, msg = launch_quick_assist()
+            return success, msg
         if ctype == "cmd":
             result = subprocess.getoutput(cmd.get("command", ""))
             return True, result

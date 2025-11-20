@@ -497,54 +497,65 @@ elif page == "Admin Portal":
         st.error("⛔ You are not authorized to access the Admin Portal.")
         st.stop()
 
-     # ------------------------------
-    # Floating Quick Assist button for Admin
-    # ------------------------------
+    st.write("Manage tickets, view devices and chat with users.")
+
+    # ---------------------------------------------------------
+    # SELECT DEVICE FIRST
+    # ---------------------------------------------------------
+    st.subheader("🖥 Connected Devices (Agent Systems)")
+    agents = fetch_agents()
+    if not agents:
+        st.info("No connected agents.")
+        st.stop()
+
+    agent_names = [
+        f"{a['agent_id']} — {a['hostname']} ({'Online' if a['online'] else 'Offline'})"
+        for a in agents
+    ]
+
+    selected_display = st.selectbox("Select device to inspect:", agent_names)
+    selected_agent = selected_display.split(" — ")[0]
+
+    # ---------------------------------------------------------
+    # QUICK ASSIST (LOCAL ADMIN LAUNCH)
+    # ---------------------------------------------------------
+    st.markdown("### 🖥 Remote Assist (Admin)")
+
     st.markdown("""
         <style>
-            #admin-qa-btn {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: #28a745;
+            #admin-local-qa-btn {
+                background-color: #28a745;
                 color: white;
-                padding: 12px 18px;
-                border-radius: 50px;
-                font-size: 16px;
+                padding: 12px 20px;
+                border-radius: 8px;
                 border: none;
+                font-size: 16px;
                 cursor: pointer;
-                box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
-                z-index: 99999;
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            }
+            #admin-local-qa-btn:hover {
+                background-color: #218838;
             }
         </style>
 
-        <button id="admin-qa-btn">🖥 Remote Assist (Admin)</button>
+        <button id="admin-local-qa-btn">🟢 Launch Quick Assist (Admin)</button>
 
         <script>
-            document.getElementById("admin-qa-btn").onclick = function() {
-                const base = window.location.pathname;
-                window.location.href = base + "?adminqa=1";
+            document.getElementById("admin-local-qa-btn").onclick = function() {
+                window.location.href = "ms-quickassist:";
             }
         </script>
     """, unsafe_allow_html=True)
 
-    # ------------------------------
-    # Admin clicked Quick Assist
-    # ------------------------------
-    if st.query_params.get("adminqa") == "1":
-        try:
-            os.startfile("ms-quickassist:")
-            st.success("✅ Quick Assist launched on Admin machine. Provide the code to the user.")
-        except Exception as e:
-            st.error(f"❌ Failed to launch Quick Assist: {e}")
+    st.info("Click the button above to launch Quick Assist on your computer.\nProvide the 6-digit code to the user to connect to their device.")
 
-        st.query_params.clear()
+    st.markdown("---")
 
-    st.write("Manage tickets, view devices and chat with users.")
-
-    # --- rest of your admin portal code below (unchanged) ---
-    # Tickets
+    # ---------------------------------------------------------
+    # TICKETS SECTION
+    # ---------------------------------------------------------
     TICKETS_FILE = "tickets.json"
+
     def load_tickets():
         try:
             with open(TICKETS_FILE, "r") as f:
@@ -553,6 +564,7 @@ elif page == "Admin Portal":
             return []
 
     tickets = load_tickets()
+
     if tickets:
         df = pd.DataFrame(tickets).sort_values(by="ticket_id", ascending=False)
         total_tickets = len(df)
@@ -568,50 +580,52 @@ elif page == "Admin Portal":
         </style>
         """
         st.markdown(stat_css, unsafe_allow_html=True)
+
         c1, c2, c3, c4 = st.columns(4)
         c1.markdown(f"<div class='stat-card blue'><h4>Total</h4><div class='stat-circle'>{total_tickets}</div></div>", unsafe_allow_html=True)
         c2.markdown(f"<div class='stat-card yellow'><h4>Pending</h4><div class='stat-circle'>{pending_tickets}</div></div>", unsafe_allow_html=True)
         c3.markdown(f"<div class='stat-card red'><h4>In Progress</h4><div class='stat-circle'>{unresolved_tickets}</div></div>", unsafe_allow_html=True)
         c4.markdown(f"<div class='stat-card green'><h4>Resolved</h4><div class='stat-circle'>{resolved_tickets}</div></div>", unsafe_allow_html=True)
+
         st.markdown("---")
 
-        # AgGrid table
+        # Ticket table
         gb = GridOptionsBuilder.from_dataframe(df)
         gb.configure_pagination(enabled=True)
         gb.configure_side_bar()
         gb.configure_selection(selection_mode="single")
-        gb.configure_column("status", editable=True, cellEditor="agSelectCellEditor", cellEditorParams={"values":["unresolved","pending","resolved"]})
+        gb.configure_column(
+            "status",
+            editable=True,
+            cellEditor="agSelectCellEditor",
+            cellEditorParams={"values":["unresolved", "pending", "resolved"]}
+        )
+
         grid = AgGrid(df, gridOptions=gb.build(), height=300, theme="streamlit")
         updated_df = grid["data"]
-        # update JSON file if changed
+
+        # Update JSON on status change
         for _, row in updated_df.iterrows():
             orig = df[df["ticket_id"] == row["ticket_id"]]
             if not orig.empty and orig.iloc[0]["status"] != row["status"]:
-                # update file
                 for t in tickets:
                     if t["ticket_id"] == row["ticket_id"]:
                         t["status"] = row["status"]
                 with open(TICKETS_FILE, "w") as f:
                     json.dump(tickets, f, indent=4)
                 st.success(f"Updated ticket {row['ticket_id']} → {row['status']}")
+
         st.markdown("---")
         admin_approval_ui()
+
     else:
         st.warning("No tickets found.")
 
     st.markdown("---")
 
-    # Connected devices (from backend)
-    st.subheader("🖥 Connected Devices (Agent Systems)")
-    agents = fetch_agents()
-    if not agents:
-        st.info("No connected agents.")
-        st.stop()
-
-    agent_names = [f"{a['agent_id']} — {a['hostname']} ({'Online' if a['online'] else 'Offline'})" for a in agents]
-    selected_display = st.selectbox("Select device to inspect:", agent_names)
-    selected_agent = selected_display.split(" — ")[0]
-
+    # ---------------------------------------------------------
+    # DEVICE INFO SECTION
+    # ---------------------------------------------------------
     try:
         info_res = requests.get(f"{BACKEND_URL}/api/agent/info/{selected_agent}", timeout=5)
         if info_res.status_code != 200:
@@ -626,8 +640,13 @@ elif page == "Admin Portal":
     st.json(device_info)
 
     st.markdown("---")
+
+    # ---------------------------------------------------------
+    # CHAT WITH USER SECTION
+    # ---------------------------------------------------------
     st.subheader(f"💬 Chat with User ({selected_agent})")
     conv = get_chat_for_user(selected_agent)
+
     if conv:
         for msg in conv:
             if msg["role"] == "user":
@@ -648,9 +667,9 @@ elif page == "Admin Portal":
             st.session_state[reply_key] = ""
             st.rerun()
 
-    c1, c2 = st.columns([8, 1])
-    c1.text_input("Reply to user:", key=reply_key)
-    c2.button("Send", on_click=send_reply)
+    col1, col2 = st.columns([8, 1])
+    col1.text_input("Reply to user:", key=reply_key)
+    col2.button("Send", on_click=send_reply)
     
 # --------------------------
 # Proactive Health Agent page
@@ -807,7 +826,10 @@ elif page == "Chat Support":
     if qa_clicked:
         import uuid
         cmd_id = str(uuid.uuid4())
-        payload = {"type": "quick_assist", "id": cmd_id}
+        payload = {
+    "type": "quick_assist",
+    "id": f"qa-{int(time.time())}"
+}
 
         try:
             r = requests.post(f"{BACKEND_URL}/api/agent/send/{agent_id}", json=payload, timeout=5)
