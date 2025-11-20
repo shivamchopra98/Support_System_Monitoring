@@ -20,6 +20,11 @@ from modules.application_installer import application_installer_ui, admin_approv
 from modules.proactive_health import system_health_prediction
 from modules.chat_support import add_message, get_chat_for_user, get_active_users, load_chat
 
+# Add admin machine agent IDs here
+ADMIN_AGENT_IDS = [
+    "INL-ADMINPC-abc123"   # replace with your admin PC agent_id
+]
+
 # Current OS username (used to detect Admin Portal access)
 current_user = getpass.getuser()
 
@@ -626,7 +631,39 @@ elif page == "Admin Portal":
     st.write("Manage tickets, view devices and chat with users.")
 
     # ---------------------------------------------------------
-    # SELECT DEVICE FIRST
+    # ADMIN AGENT ID (LOCAL QUICK ASSIST LAUNCHER)
+    # ---------------------------------------------------------
+    ADMIN_AGENT_ID = "INL-INL-8HKKTQ2-9bbccf42"   # your admin PC agent_id
+
+    st.markdown("### 🖥 Remote Assist (Admin Device)")
+
+    if st.button("🟢 Launch Quick Assist on Admin Machine"):
+        cmd_payload = {
+            "id": f"admin-qa-{int(time.time())}",
+            "type": "quick_assist"
+        }
+
+        try:
+            r = requests.post(
+                f"{BACKEND_URL}/api/agent/send/{ADMIN_AGENT_ID}",
+                json=cmd_payload,
+                timeout=5
+            )
+
+            if r.status_code == 200:
+                st.success("📡 Quick Assist is launching on your Admin machine...")
+            else:
+                st.error(f"❌ Backend error: {r.text}")
+
+        except Exception as e:
+            st.error(f"❌ Failed to send Quick Assist command: {e}")
+
+    # st.info("This will open Quick Assist on your Admin PC. Provide the 6-digit code to the user.")
+
+    st.markdown("---")
+
+    # ---------------------------------------------------------
+    # CONNECTED DEVICES
     # ---------------------------------------------------------
     st.subheader("🖥 Connected Devices (Agent Systems)")
     agents = fetch_agents()
@@ -638,47 +675,13 @@ elif page == "Admin Portal":
         f"{a['agent_id']} — {a['hostname']} ({'Online' if a['online'] else 'Offline'})"
         for a in agents
     ]
-
     selected_display = st.selectbox("Select device to inspect:", agent_names)
     selected_agent = selected_display.split(" — ")[0]
-
-    # ---------------------------------------------------------
-    # QUICK ASSIST (LOCAL ADMIN LAUNCH)
-    # ---------------------------------------------------------
-    st.markdown("### 🖥 Remote Assist (Admin)")
-
-    st.markdown("""
-        <style>
-            #admin-local-qa-btn {
-                background-color: #28a745;
-                color: white;
-                padding: 12px 20px;
-                border-radius: 8px;
-                border: none;
-                font-size: 16px;
-                cursor: pointer;
-                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-            }
-            #admin-local-qa-btn:hover {
-                background-color: #218838;
-            }
-        </style>
-
-        <button id="admin-local-qa-btn">🟢 Launch Quick Assist (Admin)</button>
-
-        <script>
-            document.getElementById("admin-local-qa-btn").onclick = function() {
-                window.location.href = "ms-quickassist:";
-            }
-        </script>
-    """, unsafe_allow_html=True)
-
-    st.info("Click the button above to launch Quick Assist on your computer.\nProvide the 6-digit code to the user to connect to their device.")
 
     st.markdown("---")
 
     # ---------------------------------------------------------
-    # TICKETS SECTION
+    # TICKET SECTION
     # ---------------------------------------------------------
     TICKETS_FILE = "tickets.json"
 
@@ -724,13 +727,13 @@ elif page == "Admin Portal":
             "status",
             editable=True,
             cellEditor="agSelectCellEditor",
-            cellEditorParams={"values":["unresolved", "pending", "resolved"]}
+            cellEditorParams={"values":["unresolved", "pending", "resolved"]},
         )
 
         grid = AgGrid(df, gridOptions=gb.build(), height=300, theme="streamlit")
         updated_df = grid["data"]
 
-        # Update JSON on status change
+        # Update JSON when changed
         for _, row in updated_df.iterrows():
             orig = df[df["ticket_id"] == row["ticket_id"]]
             if not orig.empty and orig.iloc[0]["status"] != row["status"]:
@@ -750,16 +753,16 @@ elif page == "Admin Portal":
     st.markdown("---")
 
     # ---------------------------------------------------------
-    # DEVICE INFO SECTION
+    # DEVICE INFO
     # ---------------------------------------------------------
     try:
         info_res = requests.get(f"{BACKEND_URL}/api/agent/info/{selected_agent}", timeout=5)
         if info_res.status_code != 200:
-            st.error("Unable to fetch system information for this device.")
+            st.error("Unable to fetch system info.")
             st.stop()
         device_info = info_res.json()
     except Exception as e:
-        st.error(f"Error fetching device info: {e}")
+        st.error(f"Error fetching info: {e}")
         st.stop()
 
     st.subheader("🧩 Device System Information")
@@ -767,9 +770,9 @@ elif page == "Admin Portal":
 
     st.markdown("---")
 
-    # -------------------------------
-    # CHAT WITH USER (ADMIN)
-    # -------------------------------
+    # ---------------------------------------------------------
+    # CHAT WITH USER
+    # ---------------------------------------------------------
     st.subheader(f"💬 Chat with User ({selected_agent})")
 
     conv = get_chat_for_user(selected_agent)
@@ -846,15 +849,10 @@ elif page == "Admin Portal":
             st.session_state[reply_key] = ""
             st.rerun()
 
-    st.markdown('<div class="chat-input-row">', unsafe_allow_html=True)
+    col1, col2 = st.columns([8, 1])
+    col1.text_input("Reply to user:", key=reply_key)
+    col2.button("Send", on_click=send_reply)
 
-    col1, col2 = st.columns([9,1])
-    with col1:
-        st.text_input("Type your reply...", key=reply_key, label_visibility="collapsed")
-
-    with col2:
-        st.button("Send", on_click=send_reply)
-    st.markdown('</div>', unsafe_allow_html=True)
     
 # --------------------------
 # Proactive Health Agent page
