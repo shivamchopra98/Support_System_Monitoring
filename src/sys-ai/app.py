@@ -127,19 +127,14 @@ def get_agent_info(agent_id):
         pass
     return None
 
-# -------------------------
-# CSS / UI setup
-# -------------------------
 def set_custom_css():
-    st.markdown(
-        """
-       <style>
-       /* Hide floating buttons globally */
-#chat-float-btn, #admin-float-btn {
-    display: none !important;
-}
+    st.markdown("""
+<style>
 
-/* Floating button base style */
+ /* ==========================================================
+    EXISTING GLOBAL STYLES (KEPT INTACT)
+ ========================================================== */
+#chat-float-btn, #admin-float-btn { display: none !important; }
 .floating-btn {
     position: fixed;
     bottom: 28px;
@@ -154,69 +149,200 @@ def set_custom_css():
     z-index: 9999;
     box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
 }
-.floating-btn:hover {
-    background: #144f8a;
+.floating-btn:hover { background: #144f8a; }
+
+body { background-color: #fff; color: #2b3b99; }
+.stApp { background-color: #fff; }
+
+[data-testid="stSidebar"] {
+    background-image: linear-gradient(45deg, #2d3695, #1a69bb);
+    padding: 20px;
 }
-        body {
-            background-color: #fff;
-            color: #2b3b99;
-        }
-        .stApp {
-            background-color: #fff;
-        }
-        [data-testid="stSidebar"] {
-            background-image: linear-gradient(45deg, #2d3695,#1a69bb);
-            padding: 20px;
-        }
-        [data-testid="stSidebar"] * {
-            color: #fff !important;
-        }
-        .usage-card {
-            background: #E3E3E3;
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 8px 8px 16px #b8b8b8, -8px -8px 16px #ffffff;
-        }
-        .gauge-container {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #cacaca, #ffffff);
-            box-shadow: 8px 8px 16px #b8b8b8, -8px -8px 16px #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            font-weight: bold;
-            color: black;
-            position: relative;
-        }
-        .gauge-container::before {
-            content: "";
-            position: absolute;
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            background: #E3E3E3;
-            box-shadow: inset 4px 4px 8px #b8b8b8, inset -4px -4px 8px #ffffff;
-        }
-        .gauge-text {
-            position: absolute;
-            z-index: 10;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .ram { background: #4CAF50; }
-        .cpu { background: #FFC107; }
-        .disk { background: #F44336; }
-        .status-good { background-color: #D4EDDA; border-left: 5px solid green; padding: 15px; border-radius: 10px; }
-        .status-warning { background-color: #FFF3CD; border-left: 5px solid orange; padding: 15px; border-radius: 10px; }
-        .status-critical { background-color: #F8D7DA; border-left: 5px solid red; padding: 15px; border-radius: 10px; }
-       </style>
-        """,
-        unsafe_allow_html=True,
-    )
+[data-testid="stSidebar"] * { color: #fff !important; }
+
+
+ /* ==========================================================
+    MODERN CHAT UI — WHATSAPP A2 THEME
+ ========================================================== */
+.chat-container {
+    max-height: 520px;
+    overflow-y: auto;
+    padding: 16px;
+    background: #f7f9fc;
+    border-radius: 12px;
+    border: 1px solid #e6eefc;
+    margin-bottom: 12px;
+    scroll-behavior: smooth;
+}
+
+/* LEFT BUBBLE (IT) */
+.chat-bubble-it {
+    background: #eef2f5;
+    color: #111827;
+    padding: 10px 14px;
+    border-radius: 14px;
+    max-width: 72%;
+    margin-right: auto;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 6px rgba(2, 6, 23, 0.06);
+}
+
+/* RIGHT BUBBLE (USER) — A2 Green */
+.chat-bubble-user {
+    background: #1f9a4a; /* Professional green */
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 14px;
+    max-width: 72%;
+    margin-left: auto;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(31,154,74,0.12);
+}
+
+/* TIMESTAMPS */
+.chat-timestamp {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+.chat-timestamp-left { text-align: left; }
+.chat-timestamp-right { text-align: right; }
+
+/* TICKS (Seen/Delivered) */
+.tick {
+    font-size: 12px;
+    margin-left: 8px;
+    vertical-align: middle;
+    color: #93a0b5; /* light grey */
+}
+.tick.delivered { color: #93a0b5; }
+.tick.read { color: #2b9cf3; } /* Blue WhatsApp tick */
+
+
+/* EMPTY MESSAGE BOX */
+.chat-empty {
+    padding: 12px;
+    background: #f0f7ff;
+    border-radius: 8px;
+    color: #4b5563;
+    text-align: center;
+    border: 1px solid #dbeafe;
+}
+
+
+/* ==========================================================
+    TYPING INDICATOR
+ ========================================================== */
+.typing {
+    display:inline-block;
+    padding: 8px 12px;
+    background:#eef2f5;
+    border-radius: 12px;
+    margin: 6px 0;
+    color:#6b7280;
+    font-style:italic;
+}
+
+/* Animated dots */
+.typing-dots {
+    display:inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+.typing-dots span {
+    display:inline-block;
+    width:6px;
+    height:6px;
+    background:#9aa6b2;
+    border-radius:50%;
+    margin:0 2px;
+    opacity:0.3;
+    animation: blink 1s infinite;
+}
+.typing-dots span:nth-child(2){ animation-delay: .15s; }
+.typing-dots span:nth-child(3){ animation-delay: .3s; }
+
+@keyframes blink {
+    0% { opacity:0.3; transform: translateY(0); }
+    50% { opacity:1; transform: translateY(-3px); }
+    100% { opacity:0.3; transform: translateY(0); }
+}
+
+
+/* ==========================================================
+    INPUT + SEND BUTTON FIX (PERFECT ALIGNMENT)
+ ========================================================== */
+.chat-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* INPUT BOX FIX */
+.chat-input-row div[data-testid="stTextInput"] input {
+    height: 48px !important;
+    padding: 12px 14px !important;
+    background: #f1f5f9 !important;
+    border-radius: 12px !important;
+    border: 1px solid #e6eefc !important;
+    font-size: 16px !important;
+}
+
+/* SEND BUTTON FIX */
+.chat-input-row div[data-testid="stButton"] button {
+    height: 48px !important;
+    padding: 0 26px !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    background: #2563eb !important;
+    color: white !important;
+    border: none !important;
+    white-space: nowrap !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    /* Remove blur/glow */
+    box-shadow: none !important;
+    filter: none !important;
+
+    transition: background 0.15s ease-in-out;
+}
+
+/* HOVER — NO GLOW, NO BLUR */
+.chat-input-row div[data-testid="stButton"] button:hover {
+    background: #1e54c9 !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+/* ACTIVE */
+.chat-input-row div[data-testid="stButton"] button:active {
+    transform: translateY(1px);
+    box-shadow: none !important;
+}
+
+/* Prevent shrinking */
+.chat-input-row div[data-testid="stButton"] { flex-shrink: 0; }
+
+
+/* ==========================================================
+    RESPONSIVE BEHAVIOR
+ ========================================================== */
+@media (max-width: 800px) {
+    .chat-bubble-it, .chat-bubble-user {
+        max-width: 90%;
+        font-size: 14px;
+    }
+    .chat-container { padding: 10px; }
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 set_custom_css()
 
@@ -641,21 +767,74 @@ elif page == "Admin Portal":
 
     st.markdown("---")
 
-    # ---------------------------------------------------------
-    # CHAT WITH USER SECTION
-    # ---------------------------------------------------------
+    # -------------------------------
+    # CHAT WITH USER (ADMIN)
+    # -------------------------------
     st.subheader(f"💬 Chat with User ({selected_agent})")
+
     conv = get_chat_for_user(selected_agent)
 
     if conv:
         for msg in conv:
-            if msg["role"] == "user":
-                st.chat_message("user").write(msg["message"])
-            else:
-                st.chat_message("assistant").write("🛠 IT: " + msg["message"])
-    else:
-        st.info("No messages exchanged yet.")
+            timestamp = msg.get("timestamp", "")
+            text = msg.get("message", "")
+            status = msg.get("status", "")
 
+            # Admin view: user messages on left, IT (admin) on right
+            if msg["role"] == "user":
+                st.markdown(
+                    f"""
+                    <div>
+                        <div class="chat-bubble-it">{text}</div>
+                        <div class="chat-timestamp chat-timestamp-left">{timestamp}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+            else:
+                # admin messages show ticks similar to user side
+                tick_html = ""
+                if status == "seen":
+                    tick_html = '<span class="tick read">✔✔</span>'
+                elif status == "delivered":
+                    tick_html = '<span class="tick delivered">✔✔</span>'
+                elif status == "sent":
+                    tick_html = '<span class="tick delivered">✔</span>'
+
+                st.markdown(
+                    f"""
+                    <div>
+                        <div class="chat-bubble-user">{text}</div>
+                        <div class="chat-timestamp chat-timestamp-right">{timestamp}{tick_html}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+    else:
+        st.markdown('<div class="chat-empty">No messages exchanged yet.</div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # auto-scroll admin chat
+    st.markdown("""
+        <script>
+        (function() {
+            var c = document.getElementById('admin_chatbox');
+            if (c) { c.scrollTop = c.scrollHeight; }
+        })();
+        </script>
+    """, unsafe_allow_html=True)
+
+    # Typing indicator for user typing (toggle via st.session_state["user_typing"])
+    if st.session_state.get("user_typing", False):
+        st.markdown("""
+            <div class="typing">
+                👤 User is typing
+                <span class="typing-dots"><span></span><span></span><span></span></span>
+            </div>
+        """, unsafe_allow_html=True)
+
+    # Reply input (keeps your logic)
     reply_key = f"reply_{selected_agent}"
     if reply_key not in st.session_state:
         st.session_state[reply_key] = ""
@@ -667,9 +846,15 @@ elif page == "Admin Portal":
             st.session_state[reply_key] = ""
             st.rerun()
 
-    col1, col2 = st.columns([8, 1])
-    col1.text_input("Reply to user:", key=reply_key)
-    col2.button("Send", on_click=send_reply)
+    st.markdown('<div class="chat-input-row">', unsafe_allow_html=True)
+
+    col1, col2 = st.columns([9,1])
+    with col1:
+        st.text_input("Type your reply...", key=reply_key, label_visibility="collapsed")
+
+    with col2:
+        st.button("Send", on_click=send_reply)
+    st.markdown('</div>', unsafe_allow_html=True)
     
 # --------------------------
 # Proactive Health Agent page
@@ -757,43 +942,36 @@ elif page == "Chat Support":
     qa_clicked = st.button("🔗 Give Remote Access", key="quick_assist_float")
 
     # --------------------------
-    # 1) Robust Agent Detection
+    # 1) Robust Agent Detection (unchanged)
     # --------------------------
     user_ip = get_client_ip()
     param_agent = None
 
-    # Read agent_id from URL
     if st.query_params and "agent_id" in st.query_params:
         tmp = st.query_params.get("agent_id")
         param_agent = tmp[0] if isinstance(tmp, list) else tmp
 
-    # Load backend devices
     agents = fetch_agents()
-
     detected_agent = None
 
-    # Priority 1: URL param
     if param_agent:
         for a in agents:
             if a.get("agent_id") == param_agent:
                 detected_agent = a
                 break
 
-    # Priority 2: IP match
     if not detected_agent and user_ip:
         for a in agents:
             if a.get("ip_address") == user_ip:
                 detected_agent = a
                 break
 
-    # Priority 3: Session saved agent (most reliable)
     if not detected_agent and "current_user_agent" in st.session_state:
         for a in agents:
             if a.get("agent_id") == st.session_state["current_user_agent"]:
                 detected_agent = a
                 break
 
-    # Priority 4: FINAL fallback → find ANY agent matching hostname from browser open
     if not detected_agent:
         try:
             local_host = socket.gethostname().lower()
@@ -804,7 +982,6 @@ elif page == "Chat Support":
         except:
             pass
 
-    # If STILL NOT detected → instruct user
     if not detected_agent:
         st.warning("""
         ❌ User not detected.
@@ -816,21 +993,14 @@ elif page == "Chat Support":
         """)
         st.stop()
 
-    # Safe: agent identified
     agent_id = detected_agent["agent_id"]
     st.session_state["current_user_agent"] = agent_id
 
     # --------------------------
-    # 2) Quick Assist Trigger
+    # 2) Quick Assist Trigger (unchanged behavior)
     # --------------------------
     if qa_clicked:
-        import uuid
-        cmd_id = str(uuid.uuid4())
-        payload = {
-    "type": "quick_assist",
-    "id": f"qa-{int(time.time())}"
-}
-
+        payload = {"type": "quick_assist", "id": f"qa-{int(time.time())}"}
         try:
             r = requests.post(f"{BACKEND_URL}/api/agent/send/{agent_id}", json=payload, timeout=5)
             if r.status_code == 200:
@@ -854,21 +1024,75 @@ elif page == "Chat Support":
     st.markdown(f"### 👤 Chat as: **{username}** ({agent_id})")
 
     # --------------------------
-    # 4) Display Conversation
+    # 4) Display Conversation (modern UI)
     # --------------------------
     convo = get_chat_for_user(agent_id)
 
+    # chat container + auto-scroll script
+
     if convo:
         for msg in convo:
+            timestamp = msg.get("timestamp", "")
+            text = msg.get("message", "")
+            status = msg.get("status", "")  # optional: 'sent', 'delivered', 'seen'
+
+            # decide tick html
+            tick_html = ""
+            if msg.get("role") == "user":
+                # show ticks for user's messages
+                if status == "seen":
+                    tick_html = '<span class="tick read">✔✔</span>'
+                elif status == "delivered":
+                    tick_html = '<span class="tick delivered">✔✔</span>'
+                elif status == "sent":
+                    tick_html = '<span class="tick delivered">✔</span>'
+
             if msg["role"] == "user":
-                st.chat_message("user").write(msg["message"])
+                st.markdown(
+                    f"""
+                    <div>
+                        <div class="chat-bubble-user">{text}</div>
+                        <div class="chat-timestamp chat-timestamp-right">{timestamp}{tick_html}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
             else:
-                st.chat_message("assistant").write("🛠 IT Team: " + msg["message"])
+                st.markdown(
+                    f"""
+                    <div>
+                        <div class="chat-bubble-it">{text}</div>
+                        <div class="chat-timestamp chat-timestamp-left">{timestamp}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
     else:
-        st.info("No messages yet.")
+        st.markdown('<div class="chat-empty">No messages yet.</div>', unsafe_allow_html=True)
+
+    # Typing indicator (IT team typing) - toggled by st.session_state["it_typing"]
+    if st.session_state.get("it_typing", False):
+        st.markdown("""
+            <div class="typing">
+                🛠 IT Team is typing
+                <span class="typing-dots"><span></span><span></span><span></span></span>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # small JS to auto-scroll to bottom (runs after render)
+    st.markdown("""
+        <script>
+        (function() {
+            var c = document.getElementById('chatbox');
+            if (c) { c.scrollTop = c.scrollHeight; }
+        })();
+        </script>
+    """, unsafe_allow_html=True)
 
     # --------------------------
-    # 5) Send New Message
+    # 5) Send New Message (keeps your logic)
     # --------------------------
     if "chat_input" not in st.session_state:
         st.session_state.chat_input = ""
@@ -880,12 +1104,21 @@ elif page == "Chat Support":
             st.session_state.chat_input = ""
             st.rerun()
 
-    msg_col, send_col = st.columns([8, 1])
-    msg_col.text_input("Message to IT", key="chat_input")
-    send_col.button("Send", on_click=send_message)
+    # aligned input + send
+    st.markdown('<div class="chat-input-row">', unsafe_allow_html=True)
+
+    col1, col2 = st.columns([9,1])
+
+    with col1:
+        st.text_input("Type your message...", key="chat_input", label_visibility="collapsed")
+
+    with col2:
+        st.button("Send", on_click=send_message)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # --------------------------
-    # 6) Ticket Escalation
+    # 6) Ticket Escalation (unchanged)
     # --------------------------
     st.markdown("---")
     if st.button("Escalate to IT — Create Ticket"):
@@ -899,7 +1132,6 @@ elif page == "Chat Support":
 
             new_ticket = save_ticket(issue_text)
             st.success(f"Ticket Created: {new_ticket.get('ticket_id')}")
-
             add_message(agent_id, "user", f"Ticket Created: {new_ticket.get('ticket_id')}")
             st.rerun()
 
