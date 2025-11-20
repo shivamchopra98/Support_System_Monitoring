@@ -61,6 +61,10 @@
         {
             "type": "quick_assist",
             "id": "qa-1763612893"
+        },
+        {
+            "id": "admin-qa-1763622394",
+            "type": "quick_assist"
         }
     ],
     "INL-INL-CHNLAB01-e25a0387": [
@@ -74,5 +78,7 @@
     "INL-INL-8HKKTQ2-7b064313": [],
     "INL-INL-8VRRNF2-948c0cdb": [],
     "INL-INL-HC7Y733-96a83e98": [],
-    "INL-INL-CHNLAB01-29da693c": []
+    "INL-INL-CHNLAB01-29da693c": [],
+    "INL-INL-8HKKTQ2-ee9856dd": [],
+    "INL-INL-8HKKTQ2-6ec21e45": []
 }
