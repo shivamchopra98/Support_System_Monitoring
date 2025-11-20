@@ -1,161 +1,141 @@
 {
-    "INL-INL-CHNLAB01-e25a0387": {
-        "agent_id": "INL-INL-CHNLAB01-e25a0387",
-        "hostname": "INL-CHNLAB01",
-        "username": "Labuser",
-        "os": "Windows-11-10.0.26100-SP0",
-        "ip_address": "172.16.1.60",
-        "metrics": {
-            "cpu_usage": 1.4,
-            "ram_usage": 40.7,
-            "disk_usage": 49.8
-        },
-        "device_info": {
-            "hostname": "INL-CHNLAB01",
-            "manufacturer": "AMD64",
-            "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
-            "platform": "Windows-11-10.0.26100-SP0",
-            "boot_time": 1763457675.8658154
-        },
-        "last_seen": 1763544487.424167
-    },
-    "INL-INL-8HKKTQ2-9bbccf42": {
-        "agent_id": "INL-INL-8HKKTQ2-9bbccf42",
+    "INL-INL-8HKKTQ2-ee9856dd": {
+        "agent_id": "INL-INL-8HKKTQ2-ee9856dd",
         "hostname": "INL-8HKKTQ2",
         "username": "ShivamChopra",
         "os": "Windows-11-10.0.26200-SP0",
         "ip_address": "172.16.1.41",
         "metrics": {
-            "cpu_usage": 8.0,
-            "ram_usage": 66.9,
-            "disk_usage": 46.5
+            "cpu_usage": 12.2,
+            "ram_usage": 73.0,
+            "disk_usage": 47.7
         },
         "device_info": {
             "hostname": "INL-8HKKTQ2",
             "manufacturer": "AMD64",
             "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
             "platform": "Windows-11-10.0.26200-SP0",
-            "boot_time": 1763561086.0289304
+            "boot_time": 1763561086.0294087
         },
-        "last_seen": 1763611192.6444864
+        "last_seen": 1763630397.8951786
     },
-    "INL-INL-CHNLAB01-b97b58b5": {
-        "agent_id": "INL-INL-CHNLAB01-b97b58b5",
-        "hostname": "INL-CHNLAB01",
-        "username": "Labuser",
-        "os": "Windows-11-10.0.26100-SP0",
-        "ip_address": "172.16.1.60",
-        "metrics": {
-            "cpu_usage": 2.0,
-            "ram_usage": 42.1,
-            "disk_usage": 49.9
-        },
-        "device_info": {
-            "hostname": "INL-CHNLAB01",
-            "manufacturer": "AMD64",
-            "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
-            "platform": "Windows-11-10.0.26100-SP0",
-            "boot_time": 1763457679.3508716
-        },
-        "last_seen": 1763612009.9105816
-    },
-    "INL-INL-8HKKTQ2-9c4e2a38": {
-        "agent_id": "INL-INL-8HKKTQ2-9c4e2a38",
+    "INL-INL-8HKKTQ2-f9022e15": {
+        "agent_id": "INL-INL-8HKKTQ2-f9022e15",
         "hostname": "INL-8HKKTQ2",
         "username": "ShivamChopra",
         "os": "Windows-11-10.0.26200-SP0",
         "ip_address": "172.16.1.41",
         "metrics": {
-            "cpu_usage": 41.8,
-            "ram_usage": 70.6,
-            "disk_usage": 46.5
+            "cpu_usage": 14.6,
+            "ram_usage": 73.0,
+            "disk_usage": 47.7
         },
         "device_info": {
             "hostname": "INL-8HKKTQ2",
             "manufacturer": "AMD64",
             "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
             "platform": "Windows-11-10.0.26200-SP0",
-            "boot_time": 1763561086.0296423
+            "boot_time": 1763561086.028899
         },
-        "last_seen": 1763612342.8130112
+        "last_seen": 1763630398.335184
     },
-    "INL-INL-8HKKTQ2-7b064313": {
-        "agent_id": "INL-INL-8HKKTQ2-7b064313",
+    "INL-INL-8HKKTQ2-9e7113a1": {
+        "agent_id": "INL-INL-8HKKTQ2-9e7113a1",
         "hostname": "INL-8HKKTQ2",
         "username": "ShivamChopra",
         "os": "Windows-11-10.0.26200-SP0",
         "ip_address": "172.16.1.41",
         "metrics": {
-            "cpu_usage": 18.8,
-            "ram_usage": 56.6,
-            "disk_usage": 46.5
+            "cpu_usage": 11.6,
+            "ram_usage": 73.0,
+            "disk_usage": 47.7
         },
         "device_info": {
             "hostname": "INL-8HKKTQ2",
             "manufacturer": "AMD64",
             "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
             "platform": "Windows-11-10.0.26200-SP0",
-            "boot_time": 1763561086.0289938
+            "boot_time": 1763561086.0298247
         },
-        "last_seen": 1763615336.7154732
+        "last_seen": 1763630397.6407886
     },
-    "INL-INL-8VRRNF2-948c0cdb": {
-        "agent_id": "INL-INL-8VRRNF2-948c0cdb",
-        "hostname": "INL-8VRRNF2",
-        "username": "DraksharamAdityaVams",
+    "INL-INL-8HKKTQ2-7c930416": {
+        "agent_id": "INL-INL-8HKKTQ2-7c930416",
+        "hostname": "INL-8HKKTQ2",
+        "username": "ShivamChopra",
         "os": "Windows-11-10.0.26200-SP0",
-        "ip_address": "172.16.1.68",
+        "ip_address": "172.16.1.41",
         "metrics": {
-            "cpu_usage": 15.5,
-            "ram_usage": 82.4,
-            "disk_usage": 60.2
+            "cpu_usage": 12.1,
+            "ram_usage": 73.0,
+            "disk_usage": 47.7
         },
         "device_info": {
-            "hostname": "INL-8VRRNF2",
+            "hostname": "INL-8HKKTQ2",
             "manufacturer": "AMD64",
             "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
             "platform": "Windows-11-10.0.26200-SP0",
-            "boot_time": 1761917108.4697025
+            "boot_time": 1763561086.0299606
         },
-        "last_seen": 1763613292.4127097
+        "last_seen": 1763630397.7962902
     },
-    "INL-INL-HC7Y733-96a83e98": {
-        "agent_id": "INL-INL-HC7Y733-96a83e98",
-        "hostname": "INL-HC7Y733",
-        "username": "Gokulakrishnan",
+    "INL-INL-8HKKTQ2-7190d934": {
+        "agent_id": "INL-INL-8HKKTQ2-7190d934",
+        "hostname": "INL-8HKKTQ2",
+        "username": "ShivamChopra",
         "os": "Windows-11-10.0.26200-SP0",
-        "ip_address": "172.16.1.51",
+        "ip_address": "172.16.1.41",
         "metrics": {
-            "cpu_usage": 13.0,
-            "ram_usage": 53.9,
-            "disk_usage": 74.4
+            "cpu_usage": 11.5,
+            "ram_usage": 73.0,
+            "disk_usage": 47.7
         },
         "device_info": {
-            "hostname": "INL-HC7Y733",
+            "hostname": "INL-8HKKTQ2",
             "manufacturer": "AMD64",
-            "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+            "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
             "platform": "Windows-11-10.0.26200-SP0",
-            "boot_time": 1763578352.040909
+            "boot_time": 1763561086.0295844
         },
-        "last_seen": 1763613586.5131226
+        "last_seen": 1763630397.8880343
     },
-    "INL-INL-CHNLAB01-29da693c": {
-        "agent_id": "INL-INL-CHNLAB01-29da693c",
-        "hostname": "INL-CHNLAB01",
-        "username": "Labuser",
-        "os": "Windows-11-10.0.26100-SP0",
-        "ip_address": "172.16.1.60",
+    "INL-INL-8HKKTQ2-6ec21e45": {
+        "agent_id": "INL-INL-8HKKTQ2-6ec21e45",
+        "hostname": "INL-8HKKTQ2",
+        "username": "ShivamChopra",
+        "os": "Windows-11-10.0.26200-SP0",
+        "ip_address": "172.16.1.41",
         "metrics": {
-            "cpu_usage": 0.5,
-            "ram_usage": 41.4,
-            "disk_usage": 49.9
+            "cpu_usage": 11.5,
+            "ram_usage": 73.0,
+            "disk_usage": 47.7
         },
         "device_info": {
-            "hostname": "INL-CHNLAB01",
+            "hostname": "INL-8HKKTQ2",
             "manufacturer": "AMD64",
-            "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
-            "platform": "Windows-11-10.0.26100-SP0",
-            "boot_time": 1763457679.3502958
+            "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+            "platform": "Windows-11-10.0.26200-SP0",
+            "boot_time": 1763561086.029256
+        },
+        "last_seen": 1763630397.8924983
+    },
+    "INL-INL-8HKKTQ2-52e37283": {
+        "agent_id": "INL-INL-8HKKTQ2-52e37283",
+        "hostname": "INL-8HKKTQ2",
+        "username": "ShivamChopra",
+        "os": "Windows-11-10.0.26200-SP0",
+        "ip_address": "172.16.1.41",
+        "metrics": {
+            "cpu_usage": 21.8,
+            "ram_usage": 66.7,
+            "disk_usage": 47.7
+        },
+        "device_info": {
+            "hostname": "INL-8HKKTQ2",
+            "manufacturer": "AMD64",
+            "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+            "platform": "Windows-11-10.0.26200-SP0",
+            "boot_time": 1763561086.0290205
         },
         "last_seen": 1763615337.263851
     },

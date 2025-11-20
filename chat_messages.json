@@ -52,5 +52,47 @@
         "role": "user",
         "message": "Hi",
         "timestamp": "2025-11-19 14:54:36"
+    },
+    {
+        "user": "INL-INL-8HKKTQ2-6ec21e45",
+        "role": "user",
+        "message": "hi",
+        "timestamp": "2025-11-20 13:48:36"
+    },
+    {
+        "user": "INL-INL-8HKKTQ2-6ec21e45",
+        "role": "it",
+        "message": "HI",
+        "timestamp": "2025-11-20 13:49:00"
+    },
+    {
+        "user": "INL-INL-8HKKTQ2-7c930416",
+        "role": "it",
+        "message": "Hi",
+        "timestamp": "2025-11-20 14:14:19"
+    },
+    {
+        "user": "INL-INL-8HKKTQ2-7c930416",
+        "role": "user",
+        "message": "i am facing network connectivity issue",
+        "timestamp": "2025-11-20 14:14:47"
+    },
+    {
+        "user": "INL-INL-8HKKTQ2-f9022e15",
+        "role": "user",
+        "message": "Hi",
+        "timestamp": "2025-11-20 14:46:05"
+    },
+    {
+        "user": "INL-INL-8HKKTQ2-52e37283",
+        "role": "it",
+        "message": "Hi, I am facing heating issue in my system",
+        "timestamp": "2025-11-20 15:47:29"
+    },
+    {
+        "user": "INL-INL-8HKKTQ2-52e37283",
+        "role": "user",
+        "message": "Hi, I am facing heating issue in my system",
+        "timestamp": "2025-11-20 15:47:48"
     }
 ]
